@@ -3,6 +3,7 @@
 //
 #include <iostream>
 #include <conio.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -10,9 +11,12 @@ using namespace std;
 class mainmenu{
 private:
 public:
-    int SOEmenu(){
+    void SOEmenu(){
+
+
         int userOption = 0;
         char exitOption;
+
 
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
@@ -44,7 +48,7 @@ public:
                 cin >> exitOption;
                 if (exitOption == 'y' || exitOption == 'Y')
                 {
-                    return 0;
+                    //return 0;
                 }
                 else if (exitOption == 'n' || exitOption == 'N')
                 {
@@ -66,9 +70,9 @@ public:
                 break;
         }
 
-       return 0;
+      // return 0;
     }
-    int Adminmenu(){
+    void Adminmenu(){
         int userOption = 0;
         char exitOption;
 
@@ -105,7 +109,7 @@ public:
                 cin >> exitOption;
                 if (exitOption == 'y' || exitOption == 'Y')
                 {
-                    return 0;
+                   // return 0;
                 }
                 else if (exitOption == 'n' || exitOption == 'N')
                 {
@@ -127,7 +131,7 @@ public:
                 break;
         }
 
-        return 0;
+        //return 0;
     }
 };
 

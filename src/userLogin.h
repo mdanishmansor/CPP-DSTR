@@ -3,6 +3,8 @@
 //
 #include <iostream>
 #include <conio.h>
+#include <stdlib.h>
+
 
 #include "mainmenu.h"
 using namespace std;
@@ -17,7 +19,7 @@ struct USERS{
     USERS *nextUSer;
 } ;
 
-USERS mUsers[5];
+USERS mUsers[6];
 void Login (){
 
     mUsers[0].uID = "SOE0001";
@@ -77,7 +79,7 @@ void Login (){
     mUsers[5].uEmail = "bemesZ4f@gmail.com";
     mUsers[5].uContactNumber = "012-0289432";
     mUsers[5].uAddress = "Kuala Lumpur, Malaysia";
-    mUsers[5].uPassword = "test";
+    mUsers[5].uPassword = "bemeszaf";
     mUsers[5].uAge = 21;
 
 
@@ -94,6 +96,7 @@ void Login (){
             cout << "***Log In Successful***\n\n";
             cout << "\n\t    WELCOME Sales Order Executive" << "\t" << mUsers[i].uName << "\n\t" << endl;
             mm.SOEmenu();
+
         } else if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Admin") {
             cout << "***Log In Successful***\n\n";
             cout << "\n\t    WELCOME Admin" << "\t" << mUsers[i].uName << "\n\t" << endl;
