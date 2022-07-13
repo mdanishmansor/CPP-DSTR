@@ -8,8 +8,8 @@
 using namespace std;
 
 
-
-//void Login();
+//mainmenu mainMenu;
+void Login();
 //void userData ();
 
 
@@ -27,6 +27,7 @@ int main()
 {
     //variables
     int userOption = 0;
+    int menuOption = 0;
     char exitOption;
 
     cout << "***********************************************************************************************************************" << endl;
