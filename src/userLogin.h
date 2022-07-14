@@ -10,8 +10,8 @@
 using namespace std;
 
 mainmenu mm;
-void Login();
 
+int Login();
 
 struct USERS{
     string uID, uRole, uName, uGender, uEmail, uContactNumber, uAddress, uPassword;
@@ -20,7 +20,10 @@ struct USERS{
 } ;
 
 USERS mUsers[6];
-void Login (){
+int Login () {
+
+    string userID, userPassword;
+    int loginAttempt = 0;
 
     mUsers[0].uID = "SOE0001";
     mUsers[0].uRole = "Sales Order Executive";
@@ -83,28 +86,66 @@ void Login (){
     mUsers[5].uAge = 21;
 
 
-    string userID, userPassword;
+       while (loginAttempt < 6) {
+        cout << "\tPlease Login by Entering User ID and Password!\n";
+        cout << "\t User ID: ";
+        cin >> userID;
+        cout << endl;
+        cout << "\tPassword : ";
+        cin >> userPassword;
+        cout << endl;
+        for (int i = 0; i <= 6; i++) {
+            if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Sales Order Executive") {
+                cout << "\n\tLog In Successful!\n";
+                cout << "\n\t\t\t\tWELCOME Sales Order Executive" << "\t" << mUsers[i].uName << "\n\t" << endl;
+                mm.SOEmenu();
+                break;
 
-
-
-    cout << "\t User ID: ";
-    cin >> userID;
-    cout << "\tPassword : ";
-    cin >> userPassword;
-    for (int i=0; i<=6; i++) {
-        if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Sales Order Executive") {
-            cout << "***Log In Successful***\n\n";
-            cout << "\n\t    WELCOME Sales Order Executive" << "\t" << mUsers[i].uName << "\n\t" << endl;
-            mm.SOEmenu();
-
-        } else if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Admin") {
-            cout << "***Log In Successful***\n\n";
-            cout << "\n\t    WELCOME Admin" << "\t" << mUsers[i].uName << "\n\t" << endl;
-            mm.Adminmenu();
+            } else if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Admin") {
+                cout << "\n\tLog In Successful!\n";
+                cout << "\n\t\t\t\tWELCOME Admin" << "\t" << mUsers[i].uName << "\n\t" << endl;
+                mm.Adminmenu();
+                break;
+            } else {
+                cout << "\nInvalid login attempt, Incorrect Password or ID. Please try again.\n" << endl;
+                i = 6;
+                loginAttempt++;
+            }
+            if(loginAttempt == 6) {
+                cout<< "Too many login attempts! The program will now terminate.";
+                exit(0);
         }
-
+     }
     }
 
 }
+int logout(){
+       char exitOption;
+        ExitProgram:
+        cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
+        cin >> exitOption;
+        if (exitOption == 'y' || exitOption == 'Y')
+        {
+
+        }
+        else if (exitOption == 'n' || exitOption == 'N')
+        {
+            system("cls");
+            //SOEmenu();
+        }
+        else
+        {
+            cout << "Please enter the correct input only" << endl;
+            system("pause");
+            goto ExitProgram;
+        }
+        cout << "\n\tPlease choose between 1-5 only" << endl;
+        system("pause");
+        //SOEmenu();
+       // break;
+       return 0;
+    }
+
+
 
 

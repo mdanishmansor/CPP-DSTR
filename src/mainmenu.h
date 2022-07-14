@@ -5,9 +5,10 @@
 #include <conio.h>
 #include <stdlib.h>
 
+
+
 using namespace std;
-
-
+int logout();
 class mainmenu{
 private:
 public:
@@ -43,30 +44,7 @@ public:
                 //searchOrder();
                 break;
             case 5:
-            ExitProgram:
-                cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
-                cin >> exitOption;
-                if (exitOption == 'y' || exitOption == 'Y')
-                {
-                    //return 0;
-                }
-                else if (exitOption == 'n' || exitOption == 'N')
-                {
-                    system("cls");
-                    SOEmenu();
-                }
-                else
-                {
-                    cout << "Please enter the correct input only" << endl;
-                    system("pause");
-                    goto ExitProgram;
-                }
-                break;
-            default:
-
-                cout << "\n\tPlease choose between 1-5 only" << endl;
-                system("pause");
-                SOEmenu();
+                logout();
                 break;
         }
 
