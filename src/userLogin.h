@@ -4,14 +4,12 @@
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
-
-
 #include "mainmenu.h"
+
+//#include "mainmenu.h"
 using namespace std;
 
 mainmenu mm;
-
-int Login();
 
 struct USERS{
     string uID, uRole, uName, uGender, uEmail, uContactNumber, uAddress, uPassword;
@@ -117,7 +115,7 @@ int Login () {
         }
      }
     }
-
+   return 0;
 }
 int logout(){
        char exitOption;

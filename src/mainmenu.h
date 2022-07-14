@@ -5,10 +5,12 @@
 #include <conio.h>
 #include <stdlib.h>
 
-
-
+//#include "userLogin.h";
 using namespace std;
 int logout();
+int Login();
+
+
 class mainmenu{
 private:
 public:
@@ -112,6 +114,58 @@ public:
         //return 0;
     }
 };
+
+int mainPage(){
+    int userOption = 0;
+    int menuOption = 0;
+    char exitOption;
+
+    cout << "***********************************************************************************************************************" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "*                                         LiveOrder IT Online Store                                                   *" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "***********************************************************************************************************************" << endl << endl;
+    cout << "\t [1] Login\n\t [0] EXIT" << endl << endl;
+    cout << "\t ENTER YOUR CHOICE [1/0]: ";
+    cin >> userOption;
+    switch (userOption)
+    {
+        case 1:
+            Login();
+
+            break;
+        case 0:
+        ExitProgram:
+            cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
+            cin >> exitOption;
+            if (exitOption == 'y' || exitOption == 'Y')
+            {
+                return 0;
+            }
+            else if (exitOption == 'n' || exitOption == 'N')
+            {
+                system("cls");
+                mainPage();
+            }
+            else
+            {
+                cout << "Please enter the correct input only" << endl;
+                system("pause");
+                goto ExitProgram;
+            }
+            break;
+        default:
+
+            cout << "\n\tPlease choose between 1/0 only" << endl;
+            system("pause");
+            mainPage();
+            break;
+    }
+
+    return 0;
+}
 
 
 
