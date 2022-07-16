@@ -5,4 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(CPP_DSTR
         main.cpp
+        mainmenu.h
+        Order.h
         userLogin.h)
+
