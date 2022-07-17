@@ -20,7 +20,6 @@ struct USERS{
 
 USERS mUsers[6];
 int Login () {
-
     string userID, userPassword;
     int loginAttempt = 0;
 
@@ -83,41 +82,41 @@ int Login () {
     mUsers[5].uAddress = "Kuala Lumpur, Malaysia";
     mUsers[5].uPassword = "bemeszaf";
     mUsers[5].uAge = 21;
-
-
     while (loginAttempt < 6) {
         cout << "\tPlease Login by Entering User ID and Password!\n";
         cout << "\t User ID: ";
         cin >> userID;
-        cout << endl;
         cout << "\tPassword : ";
         cin >> userPassword;
-        cout << endl;
         for (int i = 0; i <= 6; i++) {
-            if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Sales Order Executive") {
+            if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword &&
+                mUsers[i].uRole == "Sales Order Executive") {
                 cout << "\n\tLog In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Sales Order Executive" << "\t" << mUsers[i].uName << "\n\t" << endl;
                 mm.SOEmenu();
+                // i = 6;
                 break;
 
             } else if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Admin") {
                 cout << "\n\tLog In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Admin" << "\t" << mUsers[i].uName << "\n\t" << endl;
                 mm.Adminmenu();
+                // i = 6;
                 break;
-            } else {
-                cout << "\nInvalid login attempt, Incorrect Password or ID. Please try again.\n" << endl;
-                i = 6;
-                loginAttempt++;
-            }
-            if(loginAttempt == 6) {
-                cout<< "Too many login attempts! The program will now terminate.";
-                exit(0);
             }
         }
+        cout << "\nInvalid login attempt, Incorrect Password or ID. Please try again.\n" << endl;
+        loginAttempt++;
+        if (loginAttempt == 6) {
+            cout << "\nToo many login attempts! The program will now terminate.";
+            exit(0);
+        }
     }
-    return 0;
-}
+
+
+    }
+
+
 int logout(){
     char exitOption;
     ExitProgram:

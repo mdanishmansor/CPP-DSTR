@@ -10,7 +10,8 @@
 using namespace std;
 int logout();
 int Login();
-
+void displayMenu();
+void searchMenu();
 
 class mainmenu{
 private:
@@ -29,13 +30,13 @@ public:
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << "\t [1] Obtain Purchase Orders\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t [5] Logout" << endl << endl;
+        cout << "\t [1] Obtain Purchase/Order Data\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t [5] Logout" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1/2/3/4/5]: ";
         cin >> userOption;
         switch (userOption)
         {
             case 1:
-                //refreshDetails();
+                displayMenu();
                 break;
             case 2:
                 //displayOrder();
@@ -44,7 +45,7 @@ public:
                 //updateOrder();
                 break;
             case 4:
-                //searchOrder();
+                searchMenu();
                 break;
             case 5:
                 logout();
@@ -64,7 +65,7 @@ public:
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << "\t [1] Obtain Purchase Orders\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t [5] Generate Report \n\t [6] Logout" << endl << endl;
+        cout << "\t [1] Obtain Purchase/Order Data\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t [5] Generate Report \n\t [6] Logout" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1/2/3/4/5]: ";
         cin >> userOption;
         switch (userOption)
@@ -169,32 +170,32 @@ int mainPage(){
 }
 
 void displayMenu(){
-    while (1) {
+
         // display menu and get user choice
-
-
-        cout << "1. Display Products." << endl;
-        cout << "2. Order a product." << endl;
-        cout << "3. Display orders." << endl;
-        cout << "4. Exit" << endl;
-        cout << endl << "Enter your choice: ";
+        int choice = 0;
+        cout << "\t [1] Display Products\n\t [2] Order Products \n\t [3] Refresh Order Data \n\t [4] Display Physical Orders \n\t [5] Logout \n\t [6] Exit"<< endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/3/4/5/6]: ";
         cin >> choice;
         cout << endl;
 
         switch(choice) {
             case 1:
-                displayProducts(products);
+               // displayProducts(products);
                 break;
             case 2:
-                orders = buyProduct(products, orders);
+               // orders = buyProduct(products, orders);
                 break;
             case 3:
-                displayOrders(orders);
+                //displayOrders(orders);
                 break;
             case 4:
-                return 0;
+                break;
+            case 5:
+                mainPage();
+            case 6:
+                exit(0);
         }
-    }
+
 }
 
 
@@ -204,5 +205,55 @@ void displayMenu(){
 
 
 void searchMenu(){
+    int userOption = 0;
+    char exitOption;
+    cout << endl;
+    cout << "***********************************************************************************************************************" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "*                                        Please Choose Which Parameter in Searching                                   *" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "*                                                                                                                     *" << endl;
+    cout << "***********************************************************************************************************************" << endl << endl;
+    cout << "\t [1] Order ID/ProductID \n\t [2] Product Quantity \n\t [3] EXIT" << endl << endl;
+    cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
+
+    cin >> userOption;
+    switch (userOption)
+    {
+        case 1:
+             ;
+
+            break;
+        case 2:
+
+            break;
+        case 3:
+            
+        ExitProgram:
+            cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
+            cin >> exitOption;
+            if (exitOption == 'y' || exitOption == 'Y')
+            {
+                exit(0);
+            }
+            else if (exitOption == 'n' || exitOption == 'N')
+            {
+                system("cls");
+                mainPage();
+            }
+            else
+            {
+                cout << "Please enter the correct input only" << endl;
+                system("pause");
+                goto ExitProgram;
+            }
+            break;
+        default:
+            cout << "\n\tPlease choose between 1/0 only" << endl;
+            system("pause");
+            mainPage();
+            break;
+    }
 
 }

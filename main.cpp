@@ -24,6 +24,7 @@ int main()
     cout << "\t [1] Start\n\t [0] EXIT" << endl << endl;
     cout << "\t ENTER YOUR CHOICE [1/0]: ";
     cin >> userOption;
+    cout << endl;
     switch (userOption)
     {
         case 1:
