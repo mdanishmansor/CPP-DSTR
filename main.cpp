@@ -5,7 +5,7 @@
 #include "userLogin.h"
 using namespace std;
 
-int mainPage();
+void loginMenu();
 
 
 int main()
@@ -28,7 +28,7 @@ int main()
     switch (userOption)
     {
         case 1:
-            mainPage();
+            mm.loginMenu();
             break;
         case 0:
         ExitProgram:

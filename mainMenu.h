@@ -6,97 +6,150 @@
 #include <conio.h>
 #include <stdlib.h>
 
-//#include "userLogin.h";
+#include "product.h"
+#include "order.h"
+
 using namespace std;
+
 int logout();
 int Login();
+void loginMenu();
 void displayMenu();
-void searchMenu();
+void searchMenu(string userType);
+
 
 class mainmenu{
 private:
 public:
-    void SOEmenu(){
 
+    pLinkedList pLst;
+    oLinkedList oLst;
 
-        int userOption = 0;
+    string static userTypeNav(string userType){
+        if (userType == "Admin") {
+            return " [5] Create Report\n\t";
+        } else {
+            return "";
+        }
+    }
+
+    string static userTypeName(string userType){
+        if (userType == "Admin") {
+            return "*                                   LiveOrder IT Online Store Admin Menu                                              *";
+        } else {
+            return "*                           LiveOrder IT Online Store Sales Order Executive Menu                                      *";
+        }
+    }
+
+    string static userNavChoice(string userType){
+        if (userType == "Admin") {
+            return "\t ENTER YOUR CHOICE [1/2/3/4/5/0]: ";
+        } else {
+            return "\t ENTER YOUR CHOICE [1/2/3/4/0]: ";
+        }
+    }
+
+    void mainPageDisplay(string userType){
         char exitOption;
-
 
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
-        cout << "*                           LiveOrder IT Online Store Sales Order Executive Menu                                      *" << endl;
+        cout << userTypeName(userType) << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << "\t [1] Obtain Purchase/Order Data\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t [5] Logout" << endl << endl;
-        cout << "\t ENTER YOUR CHOICE [1/2/3/4/5]: ";
+        cout << "\t [1] Obtain Purchase/Order Data\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t" << userTypeNav(userType)<< " [0] Logout" << endl << endl;
+        cout << userNavChoice(userType);
+        mainNavigation(userType);
+    }
+
+    void mainNavigation(string userType){
+        int userOption = 0;
         cin >> userOption;
-        switch (userOption)
-        {
-            case 1:
-                displayMenu();
-                break;
-            case 2:
-                //displayOrder();
-                break;
-            case 3:
-                //updateOrder();
-                break;
-            case 4:
-                searchMenu();
-                break;
-            case 5:
-                logout();
-                break;
+
+        if (userType == "admin") {
+            switch (userOption)
+            {
+                case 0:
+                    logout();
+                    break;
+                case 1:
+                    obtainOrders(userType);
+                    break;
+                case 2:
+                    displayOrder(userType);
+                    break;
+                case 3:
+                    updateOrder(userType);
+                    break;
+                case 4:
+                    searchMenu(userType);
+                    break;
+                case 5:
+                    logout();
+                    break;
+                default:
+                    cout << "\n\tPlease choose between 1-5 only" << endl;
+                    system("pause");
+            }
+        } else {
+            switch (userOption)
+            {
+                case 0:
+                    logout();
+                    break;
+                case 1:
+                    obtainOrders(userType);
+                    break;
+                case 2:
+                    displayOrder(userType);
+                    break;
+                case 3:
+                    updateOrder(userType);
+                    break;
+                case 4:
+                    searchMenu(userType);
+                    break;
+                default:
+                    cout << "\n\tPlease choose between 1-4 only" << endl;
+                    system("pause");
+            }
         }
 
-        // return 0;
     }
-    void Adminmenu(){
+
+    void loginMenu(){
         int userOption = 0;
+        int menuOption = 0;
         char exitOption;
 
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
-        cout << "*                           LiveOrder IT Online Store Admin Menu                                                      *" << endl;
+        cout << "*                                         LiveOrder IT Online Store                                                   *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << "\t [1] Obtain Purchase/Order Data\n\t [2] View Orders\n\t [3] Modify Orders\n\t [4] Search Orders\n\t [5] Generate Report \n\t [6] Logout" << endl << endl;
-        cout << "\t ENTER YOUR CHOICE [1/2/3/4/5]: ";
+        cout << "\t [1] Login\n\t [0] EXIT" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/0]: ";
         cin >> userOption;
         switch (userOption)
         {
             case 1:
-                //refreshDetails();
+                Login();
                 break;
-            case 2:
-                //displayOrder();
-                break;
-            case 3:
-                //updateOrder();
-                break;
-            case 4:
-                //searchOrder();
-                break;
-            case 5:
-                //produceReport();
-                break;
-            case 6:
+            case 0:
             ExitProgram:
                 cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
                 cin >> exitOption;
                 if (exitOption == 'y' || exitOption == 'Y')
                 {
-                    // return 0;
                 }
                 else if (exitOption == 'n' || exitOption == 'N')
                 {
                     system("cls");
-                    SOEmenu();
+                    loginMenu();
                 }
                 else
                 {
@@ -107,153 +160,168 @@ public:
                 break;
             default:
 
-                cout << "\n\tPlease choose between 1-5 only" << endl;
+                cout << "\n\tPlease choose between 1/0 only" << endl;
                 system("pause");
-                SOEmenu();
+                loginMenu();
                 break;
         }
 
-        //return 0;
+    }
+
+    void obtainOrders(string userType){
+        int userOption = 0;
+        char exitOption;
+        cout << endl;
+        cout << "***********************************************************************************************************************" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                  Order List Has Been Retrieved From Online Database!                                *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "***********************************************************************************************************************" << endl << endl;
+        cout << "\t [1] EXIT" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1]: ";
+
+        pLst.insertAtEnd("P003", "Supra QuadCopter", "Amazon", "Drone", "17/7/2022", 100, 200.0);
+        pLst.insertAtEnd("P001", "64GB Cruzer Pendrive", "Kingston", "Storage Device", "17/7/2022", 57, 32.0);
+        pLst.insertAtEnd("P005", "Ipad Mini", "Apple", "Tablet", "17/7/2022", 69, 2000.0);
+        pLst.insertAtEnd("P002", "IPhone 69", "Apple", "Phone", "17/7/2022", 20, 690.5);
+        pLst.insertAtEnd("P004", "Flamethrower", "Boring Company", "Cooking", "17/7/2022", 5, 420.5);
+
+        oLst.deleteAll();
+        oLst.insertAtEnd("R004", "P004", "17/7/2022", 5, 2102.5);
+        oLst.insertAtEnd("R005", "P001", "18/7/2022", 3, 96.0);
+        oLst.insertAtEnd("R001", "P002", "14/7/2022", 2, 1381.0);
+        oLst.insertAtEnd("R002", "P002", "15/7/2022", 3, 2071.5);
+        oLst.insertAtEnd("R002", "P005", "16/7/2022", 1, 2000.0);
+
+        cin >> userOption;
+        switch (userOption)
+        {
+            case 1:
+                mainPageDisplay(userType);
+                break;
+            default:
+                cout << "\n\tERROR WARNING! Dude, Just Pick 1! :^(" << endl;
+                obtainOrders(userType);
+                break;
+        }
+
+    }
+
+    void displayOrder(string userType){
+        char exitOption;
+        cout << endl;
+        cout << "***********************************************************************************************************************" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                     LiveOrder IT Online Store Order List                                            *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "***********************************************************************************************************************" << endl << endl;
+        afterdisplay(userType);
+
+    }
+
+    void afterdisplay(string userType){
+        int userOption, userOption2 = 0;
+
+        cout << "\t [1] Sort By Order ID \t [2] Sort by Purchased Quantity \t [ANY] Default Sorting" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/ANY]: ";
+        cin >> userOption;
+        cout << endl << "____________________________________________";
+        cout << "\n\t ORDER LIST BY..." << endl;
+        cout << "\n\t [1] Ascending Order? \t [2] Descending Order? \t [3] RETURN" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
+
+        cin >> userOption2;
+        cout << endl;
+
+            switch (userOption2)
+            {
+                case 1:
+                    oLst.selectionSort(userOption, "asc");
+                    oLst.show();
+                    afterdisplay(userType);
+                    break;
+                case 2:
+                    oLst.selectionSort(userOption, "des");
+                    oLst.show();
+                    afterdisplay(userType);
+                    break;
+                case 3:
+                    mainPageDisplay(userType);
+                    break;
+                default:
+                    cout << "\n\tERROR WARNING! Please Choose Between 1/2/3 only! :^(" << endl;
+                    displayOrder(userType);
+                    break;
+            }
+
+
+    }
+
+    void updateOrder(string userType){
+        string userOption;
+
+        char exitOption;
+        cout << endl;
+        cout << "***********************************************************************************************************************" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                     Insert an Order ID To Update Details                                            *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "***********************************************************************************************************************" << endl << endl;
+        cout << "\t [****] Order ID \n\t [1] Return" << endl << endl;
+        cout << "\t PROVIDE ORDER ID OR ENTER 1 TO RETURN : ";
+        cin >> userOption;
+
+        if (userOption == "1"){
+            mainPageDisplay(userType);
+        } else {
+            oLst.update(userOption, userType);
+            cout << "\n\t ORDER UPDATE HAS BEEN SAVED SUCCESSFULLY" << endl;
+            updateOrder(userType);
+
+        }
+
+
+    }
+
+    void searchMenu(string userType){
+        int userOption = 0;
+        char exitOption;
+        cout << endl;
+        cout << "***********************************************************************************************************************" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                          Please Choose Which Type of Data You Would Like To Search For?                             *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "***********************************************************************************************************************" << endl << endl;
+        cout << "\t [1] Order ID/ProductID \n\t [2] Product Quantity \n\t [3] EXIT" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
+
+        cin >> userOption;
+        switch (userOption)
+        {
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+            case 3:
+                mainPageDisplay(userType);
+                break;
+            default:
+                cout << "\n\tERROR WARNING! Please Choose Between 1/2/3 only! :^(" << endl;
+                searchMenu(userType);
+                break;
+        }
+
     }
 };
 
-int mainPage(){
-    int userOption = 0;
-    int menuOption = 0;
-    char exitOption;
 
-    cout << "***********************************************************************************************************************" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "*                                         LiveOrder IT Online Store                                                   *" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "***********************************************************************************************************************" << endl << endl;
-    cout << "\t [1] Login\n\t [0] EXIT" << endl << endl;
-    cout << "\t ENTER YOUR CHOICE [1/0]: ";
-    cin >> userOption;
-    switch (userOption)
-    {
-        case 1:
-            Login();
-
-            break;
-        case 0:
-        ExitProgram:
-            cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
-            cin >> exitOption;
-            if (exitOption == 'y' || exitOption == 'Y')
-            {
-                return 0;
-            }
-            else if (exitOption == 'n' || exitOption == 'N')
-            {
-                system("cls");
-                mainPage();
-            }
-            else
-            {
-                cout << "Please enter the correct input only" << endl;
-                system("pause");
-                goto ExitProgram;
-            }
-            break;
-        default:
-
-            cout << "\n\tPlease choose between 1/0 only" << endl;
-            system("pause");
-            mainPage();
-            break;
-    }
-
-    return 0;
-}
-
-void displayMenu(){
-
-        // display menu and get user choice
-        int choice = 0;
-        cout << "\t [1] Display Products\n\t [2] Order Products \n\t [3] Refresh Order Data \n\t [4] Display Physical Orders \n\t [5] Logout \n\t [6] Exit"<< endl << endl;
-        cout << "\t ENTER YOUR CHOICE [1/2/3/4/5/6]: ";
-        cin >> choice;
-        cout << endl;
-
-        switch(choice) {
-            case 1:
-               // displayProducts(products);
-                break;
-            case 2:
-               // orders = buyProduct(products, orders);
-                break;
-            case 3:
-                //displayOrders(orders);
-                break;
-            case 4:
-                break;
-            case 5:
-                mainPage();
-            case 6:
-                exit(0);
-        }
-
-}
-
-
-
-
-
-
-
-void searchMenu(){
-    int userOption = 0;
-    char exitOption;
-    cout << endl;
-    cout << "***********************************************************************************************************************" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "*                                        Please Choose Which Parameter in Searching                                   *" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "*                                                                                                                     *" << endl;
-    cout << "***********************************************************************************************************************" << endl << endl;
-    cout << "\t [1] Order ID/ProductID \n\t [2] Product Quantity \n\t [3] EXIT" << endl << endl;
-    cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
-
-    cin >> userOption;
-    switch (userOption)
-    {
-        case 1:
-             ;
-
-            break;
-        case 2:
-
-            break;
-        case 3:
-            
-        ExitProgram:
-            cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
-            cin >> exitOption;
-            if (exitOption == 'y' || exitOption == 'Y')
-            {
-                exit(0);
-            }
-            else if (exitOption == 'n' || exitOption == 'N')
-            {
-                system("cls");
-                mainPage();
-            }
-            else
-            {
-                cout << "Please enter the correct input only" << endl;
-                system("pause");
-                goto ExitProgram;
-            }
-            break;
-        default:
-            cout << "\n\tPlease choose between 1/0 only" << endl;
-            system("pause");
-            mainPage();
-            break;
-    }
-
-}

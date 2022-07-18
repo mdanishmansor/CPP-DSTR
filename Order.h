@@ -4,181 +4,258 @@
 
 #include <iostream>
 #include <conio.h>
-#include <iomanip>
 #include <stdlib.h>
-#include "mainmenu.h"
+#include <iomanip>
+#include <string>
+
+//#include "product.h"
+#include "userLogin.h"
+
+using namespace std;
 
 // Data struct for PRODUCT
-struct PRODUCT {
-    string pID, pName, pSupplier, pCategory, pRegisterDate;
-    int pStock;
-    double price;
-    PRODUCT* nextProduct;
-};
 
-// Data struct for ORDER
-struct ORDER {
+struct ORDER{
     string oID, oDate, pID;
-    int pQuantity;
+    int oQuantity;
     double oTotalPrice;
-    ORDER * nextOrder;
+    ORDER * next;
 };
 
-// Function to create a new pointer for order
-ORDER* readOrder(
-        string oID,
-        string oDate,
-        string pSupplier,
-        string pCategory,
-        string pRegisterDate,
-        int pQuantity,
-        double oTotalPrice) {
-    ORDER * newONode = new ORDER;
-    return newONode;
-}
-
-// Function to add a new product to the list
-PRODUCT* addProduct(PRODUCT* prod, PRODUCT p) {
-    static int id = 1;
-    p.pID = to_string(id++);
-    PRODUCT* newProduct = new PRODUCT(p);
-    newProduct->nextProduct = prod;
-    prod = newProduct;
-    return prod;
-}
-
-// Function to initilize the list using hard coded values
-PRODUCT* initializeProducts(PRODUCT* prod) {
-    PRODUCT p = {"0", "Samsung", "Samsung", "Phone", "01-02-2020", 10, 800};
-    prod = addProduct(prod, p);
-
-    p = {"0", "Apple", "Apple", "Phone", "20-01-2020", 14, 1000};
-    prod = addProduct(prod, p);
-
-    p = {"0", "iOS cable", "Apple", "Accessories", "10-04-2020", 50, 25};
-    prod = addProduct(prod, p);
-
-    p = {"0", "USB-C", "Samsung", "Accessories", "12-03-2020", 80, 15};
-    prod = addProduct(prod, p);
-
-    p = {"0", "Drone", "DJI", "Camera", "01-06-2021", 4, 1200};
-    prod = addProduct(prod, p);
-
-    return prod;
-}
-
-// Function to display a product
-void displayProduct(PRODUCT* prod) {
-    cout << left << setw(4) << prod->pID;
-    cout << setw(12) << prod->pName;
-    cout << setw(16) << prod->pSupplier;
-    cout << setw(16) << prod->pCategory;
-    cout << setw(12) << prod->pRegisterDate;
-    cout << setw(8) << prod->pStock;
-    cout << prod->price << endl;
-}
-
-// Function to display an order
-void displayOrder(ORDER* ord) {
-    cout << left << setw(4) << ord->oID;
-    cout << setw(12) << ord->oDate;
-    cout << setw(8) << ord->pQuantity;
-    cout << ord->oTotalPrice << endl;
-}
-
-// Function to display all the products
-void displayProducts(PRODUCT* prod) {
-    PRODUCT* cur = prod;
-
-    cout << "ID  NAME        SUPPLIER        CATEGORY        DATE        QTY     PRICE" << endl;
-    cout << "-------------------------------------------------------------------------" << endl;
-    while (cur) {
-        displayProduct(cur);
-        cur = cur->nextProduct;
+struct oLinkedList{
+    ORDER * head;
+    int size;
+    oLinkedList()
+    {
+        cout << "--- Constructing the LinkedList object ---" << endl;
+        this->size = 0;
+        this->head = nullptr;
     }
-    cout << "-------------------------------------------------------------------------" << endl;
-}
 
-// Function to display all the orders
-void displayOrders(ORDER* ord) {
-    ORDER* cur = ord;
+    void deleteAll(){
+        this->size = 0;
+        this->head = nullptr;
 
-    cout << "ID  DATE        QTY     PRICE" << endl;
-    cout << "--------------------------------" << endl;
-    while (cur) {
-        displayOrder(cur);
-        cur = cur->nextOrder;
     }
-    cout << "--------------------------------" << endl;
-}
 
-// Function to add a new order to the list
-ORDER* buyProduct(PRODUCT* products, ORDER* orders) {
-    displayProducts(products);
-    static int id = 1;
+    void insertAtEnd(string orderID,
+                     string productID,
+                     string orderDate,
+                     int productQuantity,
+                     double orderTotalPrice){
+        ORDER * nextOrder = new ORDER;
+        nextOrder->oID = orderID;
+        nextOrder->pID = productID;
+        nextOrder->oDate = orderDate;
+        nextOrder->oQuantity = productQuantity;
+        nextOrder->oTotalPrice = orderTotalPrice;
 
-    string ID;
-
-    // find the product
-    cout << endl << "Enter the ID of the product you want to buy: ";
-    cin >> ID;
-    PRODUCT* cur = products;
-    while (cur) {
-        if (cur->pID == ID) {
-            break;
+        nextOrder->next = nullptr;
+        if ( head == nullptr ) {
+            head = nextOrder;
+        } else {
+            ORDER * last = head;
+            while( last->next != nullptr )
+                last = last->next;
+            last->next = nextOrder;
         }
-        cur = cur->nextProduct;
+        size++;
     }
 
-    // Create a new order
-    ORDER* newOrder = new ORDER;
-    newOrder->oID = to_string(id++);
-    newOrder->pID = cur->pID;
+    void show()
+    {
+        ORDER * curr = head;
+        cout    << "_________________________________________________________________" << endl
+                << "ORDER ID" << spacePrinter(33)
+                << "PRODUCT ID" << spacePrinter(32)
+                << "DATE" << spacePrinter(30)
+                << "QUANTITY" << spacePrinter(33)
+                << "TOTAL PRICE" << spacePrinter(30) << endl
+                << " _________________________________________________________________" << endl;
 
-    cout << "Enter the date: ";
-    cin >> newOrder->oDate;
-    cout << "Enter the quantity you want to buy: ";
-    cin >> newOrder->pQuantity;
-    newOrder->oTotalPrice = newOrder->pQuantity * cur->price;
-    cur->pStock -= newOrder->pQuantity;
-
-    // Add to the list
-    newOrder->nextOrder = orders;
-    orders = newOrder;
-    return orders;
-}
-
-// Main function
-int main() {
-    PRODUCT *products = nullptr;
-    ORDER* orders = nullptr;
-    products = initializeProducts(products);
-    int choice;
-
-    while (1) {
-        // display menu and get user choice
-
-
-        cout << "1. Display Products." << endl;
-        cout << "2. Order a product." << endl;
-        cout << "3. Display orders." << endl;
-        cout << "4. Exit" << endl;
-        cout << endl << "Enter your choice: ";
-        cin >> choice;
-        cout << endl;
-
-        switch(choice) {
-            case 1:
-                displayProducts(products);
-                break;
-            case 2:
-                orders = buyProduct(products, orders);
-                break;
-            case 3:
-                displayOrders(orders);
-                break;
-            case 4:
-                return 0;
+        while( curr != nullptr)
+        {
+            cout.precision(4);
+            cout << curr->oID << spacePrinter(30) + "  "
+                 << curr->pID<< "\t"
+                 << curr->oDate<< spacePrinter(33)
+                 << curr->oQuantity<< spacePrinter(26)
+                 << curr->oTotalPrice<< endl;
+            curr = curr->next;
         }
     }
-}
+
+    void update(string orderID, string userType)
+    {
+        string productID, orderDate, editedDate;
+        int productQuantity, choice1, choice2, editedQuantity;
+        double orderTotalPrice, editedTPrice;
+
+        ORDER * editOrder = head;
+
+        while( editOrder != nullptr)
+        {
+            if (orderID == editOrder->oID){
+                cout    << "____________________________________________________________" << endl
+                        << "ORDER ID" << spacePrinter(33)
+                        << "PRODUCT ID" << spacePrinter(32)
+                        << "DATE" << spacePrinter(30)
+                        << "QUANTITY" << spacePrinter(33)
+                        << "TOTAL PRICE" << spacePrinter(30) << endl
+                        << " ___________________________________________________________" << endl;
+                cout.precision(4);
+                cout << editOrder->oID << spacePrinter(30) + "  "
+                     << editOrder->pID<< "\t"
+                     << editOrder->oDate<< spacePrinter(33)
+                     << editOrder->oQuantity<< spacePrinter(26)
+                     << editOrder->oTotalPrice<< endl << endl << endl
+                     << "\t DO YOU WANT TO EDIT THIS ORDER?" << endl
+                     << "\t [1] Yes \n\t [2] No" << endl << endl
+                     << "\t ENTER YOUR CHOICE [1/2]: ";
+                     cin >> choice1;
+                cout << "_______________________________________________" << endl;
+
+                switch (choice1)
+                {
+                    case 1:
+                        cout << "\t WHICH DETAILS DO YOU WANT TO EDIT?"<< endl
+                             << "\t [1] Order Date \n\t [2] Quantity \n\t [3] Total Price \n\t [4] RETURN" << endl << endl
+                             << "\t ENTER YOUR CHOICE [1/2/3/4]: ";
+                        cin >> choice2;
+                        cout << "_______________________________________________" << endl;
+
+                        cout << "Please Update The Details and Do Dot Leave the Details Empty!" << endl;
+                        switch (choice2) {
+                            case 1:
+                                cout << "\t ORDER DATE (Current value: " << editOrder->oDate << "): ";
+                                cin >> editedDate;
+                                editOrder->oDate = editedDate;
+                                cout << "ORDER DATE Succesfully Updated!" << endl;
+
+                                break;
+                            case 2:
+                                cout << "\t QUANTITY (Current value" << editOrder->oQuantity << "): ";
+                                cin >> editedQuantity;
+                                editOrder->oDate = editedDate;
+                                cout << "QUANTITY Succesfully Updated!" << endl;
+                                break;
+                            case 3:
+                                cout << "\t TOTAL PRICE (Current value" << editOrder->oTotalPrice << "): ";
+                                cin >> editedTPrice;
+                                editOrder->oDate = editedDate;
+                                cout << "TOTAL PRICE Succesfully Updated!" << endl;
+                                break;
+                            case 4:
+                                update(orderID, userType);
+                                break;
+                            default:
+                                break;
+                                cout << "\n\tERROR WARNING! Please Choose Between 1/2/3/4 only! :^(" << endl;
+                                update(orderID, userType);
+                                break;
+                        }
+                        break;
+
+                    case 2:
+                        break;
+
+                    default:
+                        cout << "\n\tERROR WARNING! Please Choose Between 1/2 only! :^(" << endl;
+                        update(orderID, userType);
+                        break;
+                }
+
+                editOrder = nullptr;
+
+            } else {
+                editOrder = editOrder->next;
+            }
+        }
+    }
+
+    void selectionSort(int orderType, string arrangeType)
+    {
+        string selectedSort = "default";
+
+        ORDER * sortOrder = head;
+
+        // Traverse the List
+        while (sortOrder) {
+            ORDER* min = sortOrder;
+            ORDER* r = sortOrder->next;
+
+            if (arrangeType == "des"){
+                if (orderType == 1){
+                    // Traverse the unsorted sublist
+                    while (r) {
+                        if (min->oID < r->oID)
+                            min = r;
+
+                        r = r->next;
+                    }
+
+                    // Swap Data
+                    string x = sortOrder->oID;
+                    sortOrder->oID = min->oID;
+                    min->oID = x;
+                    sortOrder = sortOrder->next;
+
+                } else if (orderType == 2){
+                    while (r) {
+                        if (min->oQuantity < r->oQuantity)
+                            min = r;
+
+                        r = r->next;
+                    }
+
+                    // Swap Data
+                    int x = sortOrder->oQuantity;
+                    sortOrder->oQuantity = min->oQuantity;
+                    min->oQuantity = x;
+                    sortOrder = sortOrder->next;
+
+                } else {
+                    // No sorting here
+                    sortOrder = nullptr;
+                }
+            } else {  // WHEN USER CHOOSES DESCENDING ORDER
+                if (orderType == 1){
+                    // Traverse the unsorted sublist
+                    while (r) {
+                        if (min->oID > r->oID)
+                            min = r;
+
+                        r = r->next;
+                    }
+
+                    // Swap Data
+                    string x = sortOrder->oID;
+                    sortOrder->oID = min->oID;
+                    min->oID = x;
+                    sortOrder = sortOrder->next;
+
+                } else if (orderType == 2){
+                    while (r) {
+                        if (min->oQuantity > r->oQuantity)
+                            min = r;
+
+                        r = r->next;
+                    }
+
+                    // Swap Data
+                    int x = sortOrder->oQuantity;
+                    sortOrder->oQuantity = min->oQuantity;
+                    min->oQuantity = x;
+                    sortOrder = sortOrder->next;
+
+                } else {
+                    sortOrder = nullptr;
+                }
+            }
+
+
+        }
+    }
+
+
+};

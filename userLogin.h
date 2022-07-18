@@ -1,7 +1,8 @@
 //
 // Created by User on 16/7/2022.
 //
-
+#ifndef EDGE_H
+#define EDGE_H
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
@@ -23,14 +24,14 @@ int Login () {
     string userID, userPassword;
     int loginAttempt = 0;
 
-    mUsers[0].uID = "SOE0001";
+    mUsers[0].uID = "1";
     mUsers[0].uRole = "Sales Order Executive";
     mUsers[0].uName = "Muhammad Faris";
     mUsers[0].uGender = "Male";
     mUsers[0].uEmail = "faris01@gmail.com";
     mUsers[0].uContactNumber = "012-6763829";
     mUsers[0].uAddress = "Kuala Lumpur, Malaysia";
-    mUsers[0].uPassword = "faris02";
+    mUsers[0].uPassword = "1";
     mUsers[0].uAge = 20;
 
     mUsers[1].uID = "SOE0002";
@@ -93,14 +94,14 @@ int Login () {
                 mUsers[i].uRole == "Sales Order Executive") {
                 cout << "\n\tLog In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Sales Order Executive" << "\t" << mUsers[i].uName << "\n\t" << endl;
-                mm.SOEmenu();
+                mm.mainPageDisplay("Sales Order Executive");
                 // i = 6;
                 break;
 
             } else if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Admin") {
                 cout << "\n\tLog In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Admin" << "\t" << mUsers[i].uName << "\n\t" << endl;
-                mm.Adminmenu();
+                mm.mainPageDisplay("Admin");
                 // i = 6;
                 break;
             }
@@ -113,8 +114,8 @@ int Login () {
         }
     }
 
-
-    }
+    return 0;
+    };
 
 
 int logout(){
@@ -143,3 +144,5 @@ int logout(){
     // break;
     return 0;
 }
+
+#endif
