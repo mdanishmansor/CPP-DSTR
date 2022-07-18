@@ -7,12 +7,10 @@ using namespace std;
 
 void loginMenu();
 
+int start(){
 
-int main()
-{
-    //variables
-    int userOption = 0;
-    char exitOption;
+    int userOption;
+    string exitOption;
 
     cout << "***********************************************************************************************************************" << endl;
     cout << "***********************************************************************************************************************" << endl;
@@ -24,6 +22,15 @@ int main()
     cout << "\t [1] Start\n\t [0] EXIT" << endl << endl;
     cout << "\t ENTER YOUR CHOICE [1/0]: ";
     cin >> userOption;
+
+    if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+        cin.clear();
+        cin.ignore();
+        userOption = 6969;
+    }
+//    cin.clear();
+//    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     cout << endl;
     switch (userOption)
     {
@@ -31,7 +38,7 @@ int main()
             mm.loginMenu();
             break;
         case 0:
-        ExitProgram:
+            char exitOption;
             cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
             cin >> exitOption;
             if (exitOption == 'y' || exitOption == 'Y')
@@ -40,23 +47,25 @@ int main()
             }
             else if (exitOption == 'n' || exitOption == 'N')
             {
-                system("cls");
-                main();
+//                system("cls");
+                start();
             }
             else
             {
-                cout << "Please enter the correct input only" << endl;
-                system("pause");
-                goto ExitProgram;
+                cout << "ERROR: Please enter either 'Y' or 'N' only" << endl;
+                start();
             }
+
             break;
         default:
-
-            cout << "\n\tPlease choose between 1/0 only" << endl;
-            system("pause");
-            main();
+//            system("cls");
+            cout << "\n\tPlease choose between 1/0 only!" << endl;
+            start();
             break;
     }
-
+}
+int main()
+{
+    start();
     return 0;
 }

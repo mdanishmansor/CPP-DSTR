@@ -11,7 +11,7 @@
 
 using namespace std;
 
-int logout();
+void logout(string userType);
 int Login();
 void loginMenu();
 void displayMenu();
@@ -67,12 +67,19 @@ public:
     void mainNavigation(string userType){
         int userOption = 0;
         cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (userType == "admin") {
             switch (userOption)
             {
                 case 0:
-                    logout();
+                    logout(userType);
                     break;
                 case 1:
                     obtainOrders(userType);
@@ -87,17 +94,17 @@ public:
                     searchMenu(userType);
                     break;
                 case 5:
-                    logout();
+                    logout(userType);
                     break;
                 default:
                     cout << "\n\tPlease choose between 1-5 only" << endl;
-                    system("pause");
+                    mainPageDisplay(userType);
             }
         } else {
             switch (userOption)
             {
                 case 0:
-                    logout();
+                    logout(userType);
                     break;
                 case 1:
                     obtainOrders(userType);
@@ -113,7 +120,7 @@ public:
                     break;
                 default:
                     cout << "\n\tPlease choose between 1-4 only" << endl;
-                    system("pause");
+                    mainPageDisplay(userType);
             }
         }
 
@@ -122,8 +129,9 @@ public:
     void loginMenu(){
         int userOption = 0;
         int menuOption = 0;
-        char exitOption;
+        string exitOption;
 
+        cout << endl;
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
@@ -134,34 +142,41 @@ public:
         cout << "\t [1] Login\n\t [0] EXIT" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1/0]: ";
         cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         switch (userOption)
         {
             case 1:
                 Login();
                 break;
             case 0:
-            ExitProgram:
                 cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
                 cin >> exitOption;
-                if (exitOption == 'y' || exitOption == 'Y')
-                {
+                if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+                    cin.clear();
+                    cin.ignore();
+                    userOption = 6969;
                 }
-                else if (exitOption == 'n' || exitOption == 'N')
-                {
-                    system("cls");
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                if (exitOption == "y" || exitOption == "Y") {
+
+                } else if (exitOption == "n" || exitOption == "N") {
                     loginMenu();
-                }
-                else
-                {
-                    cout << "Please enter the correct input only" << endl;
-                    system("pause");
-                    goto ExitProgram;
+                } else {
+                    cout << "\n\tPlease choose between 'Y' or 'N' only" << endl;
+                    loginMenu();
                 }
                 break;
             default:
-
                 cout << "\n\tPlease choose between 1/0 only" << endl;
-                system("pause");
+//                system("pause");
                 loginMenu();
                 break;
         }
@@ -196,6 +211,13 @@ public:
         oLst.insertAtEnd("R002", "P005", "16/7/2022", 1, 2000.0);
 
         cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         switch (userOption)
         {
             case 1:
@@ -229,12 +251,26 @@ public:
         cout << "\t [1] Sort By Order ID \t [2] Sort by Purchased Quantity \t [ANY] Default Sorting" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1/2/ANY]: ";
         cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << endl << "____________________________________________";
         cout << "\n\t ORDER LIST BY..." << endl;
         cout << "\n\t [1] Ascending Order? \t [2] Descending Order? \t [3] RETURN" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
 
         cin >> userOption2;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption2 = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << endl;
 
             switch (userOption2)
@@ -276,6 +312,13 @@ public:
         cout << "\t [****] Order ID \n\t [1] Return" << endl << endl;
         cout << "\t PROVIDE ORDER ID OR ENTER 1 TO RETURN : ";
         cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (userOption == "1"){
             mainPageDisplay(userType);
@@ -291,6 +334,8 @@ public:
 
     void searchMenu(string userType){
         int userOption = 0;
+        string searchKey;
+        int searchNKey;
         char exitOption;
         cout << endl;
         cout << "***********************************************************************************************************************" << endl;
@@ -300,14 +345,23 @@ public:
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << "\t [1] Order ID/ProductID \n\t [2] Product Quantity \n\t [3] EXIT" << endl << endl;
-        cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
+        cout << "\t [1] Order ID \n\t [2] Product ID \n\t [3] Product Quantity \n\t [4] EXIT" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/3/4]: ";
 
         cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
         switch (userOption)
         {
             case 1:
-
+                cout << "\n\t ENTER ORDER ID TO SEARCH:  ";
+                oLst.searchID();
                 break;
             case 2:
 
@@ -317,6 +371,32 @@ public:
                 break;
             default:
                 cout << "\n\tERROR WARNING! Please Choose Between 1/2/3 only! :^(" << endl;
+                searchMenu(userType);
+                break;
+        }
+        cout << "\n\t TRY AGAIN? ";
+        cout << "\n\t [1] Yes \n\t [2] No" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2]: ";
+
+        cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        switch (userOption)
+        {
+            case 1:
+                searchMenu(userType);
+                break;
+            case 2:
+                mainPageDisplay(userType);
+                break;
+            default:
+                cout << "\n\tERROR WARNING! Please Choose Between 1/2 only! :^(" << endl;
                 searchMenu(userType);
                 break;
         }

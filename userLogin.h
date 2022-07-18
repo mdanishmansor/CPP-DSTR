@@ -95,15 +95,13 @@ int Login () {
                 cout << "\n\tLog In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Sales Order Executive" << "\t" << mUsers[i].uName << "\n\t" << endl;
                 mm.mainPageDisplay("Sales Order Executive");
-                // i = 6;
-                break;
+                return 0;
 
             } else if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword && mUsers[i].uRole == "Admin") {
                 cout << "\n\tLog In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Admin" << "\t" << mUsers[i].uName << "\n\t" << endl;
                 mm.mainPageDisplay("Admin");
-                // i = 6;
-                break;
+                return 0;
             }
         }
         cout << "\nInvalid login attempt, Incorrect Password or ID. Please try again.\n" << endl;
@@ -117,32 +115,21 @@ int Login () {
     return 0;
     };
 
-
-int logout(){
-    char exitOption;
-    ExitProgram:
-    cout << "\n\tProgram terminating. Are you sure? (Y/N): ";
+void logout(string userType){
+    string exitOption = "";
+    cout<< "______________________________________________________________" << endl;
+    cout << "\n\t Are you sure you want to logout? ";
+    cout << "\n\t [Y] Yes [N] No \n\t" << endl;
+    cout << "\t ENTER YOUR CHOICE [Y/N]: ";
     cin >> exitOption;
-    if (exitOption == 'y' || exitOption == 'Y')
-    {
-
+    if (exitOption == "y" || exitOption == "Y") {
+        mm.loginMenu();
+    } else if (exitOption == "n" || exitOption == "N") {
+        mm.mainPageDisplay(userType);
+    } else {
+        cout << endl << "ERROR: Please enter either 'Y' or 'N' only" << endl;
+        logout(userType);
     }
-    else if (exitOption == 'n' || exitOption == 'N')
-    {
-        system("cls");
-        //SOEmenu();
-    }
-    else
-    {
-        cout << "Please enter the correct input only" << endl;
-        system("pause");
-        goto ExitProgram;
-    }
-    cout << "\n\tPlease choose between 1-5 only" << endl;
-    system("pause");
-    //SOEmenu();
-    // break;
-    return 0;
 }
 
 #endif
