@@ -28,7 +28,6 @@ struct pLinkedList{
     int size;
     pLinkedList()
     {
-        cout << "--- Constructing the LinkedList object ---" << endl;
         this->size = 0;
         this->head = nullptr;
     }

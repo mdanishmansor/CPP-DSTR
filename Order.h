@@ -1,12 +1,10 @@
-//
-// Created by User on 16/7/2022.
-//
-
 #include <iostream>
-#include <conio.h>
-#include <stdlib.h>
-#include <iomanip>
 #include <string>
+#include <fstream>
+#include <filesystem>
+#include <unistd.h>
+#include <ctime>
+
 
 //#include "product.h"
 #include "userLogin.h"
@@ -27,7 +25,6 @@ struct oLinkedList{
     int size;
     oLinkedList()
     {
-        cout << "--- Constructing the LinkedList object ---" << endl;
         this->size = 0;
         this->head = nullptr;
     }
@@ -255,6 +252,201 @@ struct oLinkedList{
 
 
         }
+    }
+
+    int searchID() {
+        string searchKey;
+        cin >> searchKey;
+        ORDER *searchNode = head;
+        while(searchNode!=NULL){
+            if(searchNode->oID==searchKey){
+                    cout<< "\n\t RESULT FOUND!" << endl
+                        << "_________________________________________________________________" << endl
+                        << "ORDER ID" << spacePrinter(33)
+                        << "PRODUCT ID" << spacePrinter(32)
+                        << "DATE" << spacePrinter(30)
+                        << "QUANTITY" << spacePrinter(33)
+                        << "TOTAL PRICE" << spacePrinter(30) << endl
+                        << "_________________________________________________________________" << endl;
+
+                    cout.precision(4);
+                    cout << searchNode->oID << spacePrinter(30) + "  "
+                         << searchNode->pID<< "\t"
+                         << searchNode->oDate<< spacePrinter(33)
+                         << searchNode->oQuantity<< spacePrinter(26)
+                         << searchNode->oTotalPrice<< endl
+                         << "_________________________________________________________________" << endl;
+
+                return 1;
+            }
+
+            searchNode=searchNode->next;
+//            key[0];
+
+        }
+        cout<< "______________________________________________________________" << endl
+            << "\n\t RESULT NOT FOUND!" << endl
+            << "_________________________________________________________________" << endl;
+        return 0;
+    }
+
+    void createReport()
+    {
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+
+        int year = 1900 + ltm->tm_year;
+        int month = 1 + ltm->tm_mon;
+        int day = ltm->tm_mday;
+        int hour = ltm->tm_hour;
+        int minute = ltm->tm_min;
+        int second = ltm->tm_sec;
+
+        char tmp[256];
+        getcwd(tmp, 256);
+
+        string dir = strcat(tmp,"\\Generated_Reports\\report_");
+        dir = dir + to_string(day) + "_"
+              + to_string(month) + "_"
+              + to_string(year) + "_"
+              + to_string(hour) + "-"
+              + to_string(minute) + "-"
+              + to_string(second) + ".txt";
+
+        int totalQuantity = 0;
+        double totalPrice = 0.0;
+        cout.precision(4);
+        ORDER * curr = head;
+        ORDER * curr2 = head;
+
+        while( curr != nullptr)
+        {
+            totalQuantity = totalQuantity + curr->oQuantity;
+            totalPrice = totalPrice + curr->oTotalPrice;
+            curr = curr->next;
+        }
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+             << "+                                                                                                                     +" << endl
+             << "+                                       LiveOrder IT Order Summary Sales Report                                       +" << endl
+             << "+                                                                                                                     +" << endl
+             << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+        cout    << "______________________________________________________________________________________________________________________" << endl
+                << "ORDER ID" << spacePrinter(33)
+                << "PRODUCT ID" << spacePrinter(32)
+                << "DATE" << spacePrinter(-25)
+                << "QUANTITY" << spacePrinter(33)
+                << "TOTAL PRICE" << spacePrinter(30) << endl
+                << "______________________________________________________________________________________________________________________" << endl;
+
+        while( curr2 != nullptr)
+        {
+            cout.precision(4);
+            cout << curr2->oID << spacePrinter(30) + "  "
+                 << curr2->pID<< "\t"
+                 << curr2->oDate<< spacePrinter(-25)
+                 << curr2->oQuantity<< spacePrinter(26)
+                 << curr2->oTotalPrice<< endl;
+            curr2 = curr2->next;
+        }
+        cout.precision(4);
+        cout << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+             << "+                                                                                        + Total Sold : " << totalQuantity << endl
+             << "+                                                                                        + Total Price: RM" << totalPrice << endl
+             << "+                                                                                        +                             " << endl
+             << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+             << "Generated Report On The: " << to_string(day) + "/"
+                                                  + to_string(month) + "/"
+                                                  + to_string(year) + "\t"
+                                                  + to_string(hour) + ":"
+                                                  + to_string(minute) + ":"
+                                                  + to_string(second)<< endl;
+        printReport();
+    }
+
+    void printReport(){
+
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+
+        int year = 1900 + ltm->tm_year;
+        int month = 1 + ltm->tm_mon;
+        int day = ltm->tm_mday;
+        int hour = ltm->tm_hour;
+        int minute = ltm->tm_min;
+        int second = ltm->tm_sec;
+
+        char tmp[256];
+        getcwd(tmp, 256);
+
+        string dir = strcat(tmp,"\\Generated_Reports\\report_");
+        dir = dir + to_string(day) + "_"
+              + to_string(month) + "_"
+              + to_string(year) + "_"
+              + to_string(hour) + "-"
+              + to_string(minute) + "-"
+              + to_string(second) + ".txt";
+
+        ofstream fw(dir, std::ofstream::out);
+//        cout << tmp << endl;
+//        cout << put_time(localtime(&now), "%F %T") <<  endl;
+
+        int totalQuantity = 0;
+        double totalPrice = 0.0;
+        cout.precision(4);
+        ORDER * curr = head;
+        ORDER * curr2 = head;
+
+        while( curr != nullptr)
+        {
+            totalQuantity = totalQuantity + curr->oQuantity;
+            totalPrice = totalPrice + curr->oTotalPrice;
+            curr = curr->next;
+        }
+
+        if (fw.is_open())
+        {
+            fw << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+                 << "+                                                                                                                     +" << endl
+                 << "+                                       LiveOrder IT Order Summary Sales Report                                       +" << endl
+                 << "+                                                                                                                     +" << endl
+                 << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl;
+            fw    << "______________________________________________________________________________________________________________________" << endl
+                    << "ORDER ID" << spacePrinter(33)
+                    << "PRODUCT ID" << spacePrinter(32)
+                    << "DATE" << spacePrinter(-25)
+                    << "QUANTITY" << spacePrinter(33)
+                    << "TOTAL PRICE" << spacePrinter(30) << endl
+                    << "______________________________________________________________________________________________________________________" << endl;
+
+            while( curr2 != nullptr)
+            {
+                fw.precision(4);
+                fw << curr2->oID << spacePrinter(30) + "  "
+                     << curr2->pID<< "\t"
+                     << curr2->oDate<< spacePrinter(-25)
+                     << curr2->oQuantity<< spacePrinter(26)
+                     << curr2->oTotalPrice<< endl;
+                curr2 = curr2->next;
+            }
+            fw.precision(4);
+            fw << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+                 << "+                                                                                        + Total Sold : " << totalQuantity << endl
+                 << "+                                                                                        + Total Price: RM" << totalPrice << endl
+                 << "+                                                                                        +                             " << endl
+                 << "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" << endl
+                 << "Generated Report On The: " << to_string(day) + "/"
+                    + to_string(month) + "/"
+                    + to_string(year) + "\t"
+                    + to_string(hour) + ":"
+                    + to_string(minute) + ":"
+                    + to_string(second)<< endl;
+
+            fw.close();
+        }
+        else cout << "Problem with opening file";
+        fw.close();
+        cout << endl << "Report File Created and Saved Successfully at Directory: '" << dir << "'" << endl;
+
     }
 
 

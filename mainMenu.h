@@ -74,8 +74,7 @@ public:
         }
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
-        if (userType == "admin") {
+        if (userType == "Admin") {
             switch (userOption)
             {
                 case 0:
@@ -94,7 +93,7 @@ public:
                     searchMenu(userType);
                     break;
                 case 5:
-                    logout(userType);
+                    generateReport(userType);
                     break;
                 default:
                     cout << "\n\tPlease choose between 1-5 only" << endl;
@@ -232,7 +231,6 @@ public:
     }
 
     void displayOrder(string userType){
-        char exitOption;
         cout << endl;
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
@@ -293,8 +291,6 @@ public:
                     displayOrder(userType);
                     break;
             }
-
-
     }
 
     void updateOrder(string userType){
@@ -401,6 +397,69 @@ public:
                 break;
         }
 
+    }
+
+    void generateReport(string userType){
+        int userOption, userOption2 = 0;
+        cout << endl;
+        cout << "***********************************************************************************************************************" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                LiveOrder IT Online Store Summary Report Generator                                   *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "***********************************************************************************************************************" << endl << endl;
+        cout << "\t [1] Sort By Order ID \t [2] Sort by Purchased Quantity \t [ANY] Default Sorting" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/ANY]: ";
+
+        cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        cout << endl << "____________________________________________";
+        cout << "\n\t ORDER LIST BY..." << endl;
+        cout << "\n\t [1] Ascending Order? \t [2] Descending Order? \t [3] RETURN" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/3]: ";
+
+        cin >> userOption2;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption2 = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << endl;
+
+        switch (userOption2)
+        {
+            case 1:
+                oLst.selectionSort(userOption, "asc");
+                oLst.createReport();
+                cout << "\n\t Press 'Enter' To Return To The Main Menu" << endl;
+                getchar();
+                mainPageDisplay(userType);
+                break;
+            case 2:
+                oLst.selectionSort(userOption, "des");
+                oLst.createReport();
+                cout << "\n\t Press 'Enter' To Return To The Main Menu" << endl;
+                getchar();
+                mainPageDisplay(userType);
+                break;
+            case 3:
+                mainPageDisplay(userType);
+                break;
+            default:
+                cout << "\n\tERROR WARNING! Please Choose Between 1/2/3 only! :^(" << endl;
+                generateReport(userType);
+                break;
+        }
     }
 };
 
