@@ -4,14 +4,19 @@
 #include <filesystem>
 #include <unistd.h>
 #include <ctime>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <direct.h>
+#include <stdio.h>
+#pragma once
 
-
-//#include "product.h"
+#include "product.h"
 #include "userLogin.h"
 
 using namespace std;
 
 // Data struct for PRODUCT
+struct stat info;
 
 struct ORDER{
     string oID, oDate, pID;
@@ -23,16 +28,29 @@ struct ORDER{
 struct oLinkedList{
     ORDER * head;
     int size;
+    pLinkedList pLst;
+
     oLinkedList()
     {
         this->size = 0;
         this->head = nullptr;
     }
 
+    int getSize()
+    {
+        return size;
+    }
+
     void deleteAll(){
         this->size = 0;
         this->head = nullptr;
 
+    }
+
+    bool IsPathExist(const std::string &s)
+    {
+        struct stat buffer;
+        return (stat (s.c_str(), &buffer) == 0);
     }
 
     void insertAtEnd(string orderID,
@@ -80,6 +98,58 @@ struct oLinkedList{
                  << curr->oTotalPrice<< endl;
             curr = curr->next;
         }
+    }
+
+    string generateID(){
+        int currentID = getSize() + 1;
+        string generatedID;
+
+
+        std::string str = to_string(currentID);
+        size_t n = 3;
+
+        std::ostringstream ss;
+        ss << std::setw(n) << std::setfill('0') << str;
+        std::string s = ss.str();
+
+        generatedID = "R" + s;
+
+        return generatedID;
+    }
+
+    void createOrder(string pID, int quantity, double tPrice){
+        ORDER * nextOrder = new ORDER;
+        string orderID, orderDate;
+        double orderTotalPrice;
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+
+        int year = 1900 + ltm->tm_year;
+        int month = 1 + ltm->tm_mon;
+        int day = ltm->tm_mday;
+
+        orderID = generateID();
+        orderDate = to_string(year) + "/" + to_string(month) + "/" + to_string(day);
+
+        nextOrder->oID = orderID;
+        nextOrder->pID = pID;
+        nextOrder->oDate = orderDate;
+        nextOrder->oQuantity = quantity;
+        nextOrder->oTotalPrice = tPrice;
+
+
+        nextOrder->next = nullptr;
+        if ( head == nullptr ) {
+            head = nextOrder;
+        } else {
+            ORDER * last = head;
+            while( last->next != nullptr )
+                last = last->next;
+            last->next = nextOrder;
+        }
+        size++;
+
+        show();
     }
 
     void update(string orderID, string userType)
@@ -133,13 +203,13 @@ struct oLinkedList{
                             case 2:
                                 cout << "\t QUANTITY (Current value" << editOrder->oQuantity << "): ";
                                 cin >> editedQuantity;
-                                editOrder->oDate = editedDate;
+                                editOrder->oQuantity = editedQuantity;
                                 cout << "QUANTITY Succesfully Updated!" << endl;
                                 break;
                             case 3:
                                 cout << "\t TOTAL PRICE (Current value" << editOrder->oTotalPrice << "): ";
                                 cin >> editedTPrice;
-                                editOrder->oDate = editedDate;
+                                editOrder->oTotalPrice = editedTPrice;
                                 cout << "TOTAL PRICE Succesfully Updated!" << endl;
                                 break;
                             case 4:
@@ -168,6 +238,8 @@ struct oLinkedList{
                 editOrder = editOrder->next;
             }
         }
+
+
     }
 
     void selectionSort(int orderType, string arrangeType)
@@ -192,9 +264,25 @@ struct oLinkedList{
                     }
 
                     // Swap Data
-                    string x = sortOrder->oID;
+                    string tempID = sortOrder->oID;
+                    string temppID = sortOrder->pID;
+                    string tempoDate = sortOrder->oDate;
+                    int tempoQuantity = sortOrder->oQuantity;
+                    double tempoTotalPrice = sortOrder->oTotalPrice;
+
                     sortOrder->oID = min->oID;
-                    min->oID = x;
+                    sortOrder->pID = min->pID;
+                    sortOrder->oDate = min->oDate;
+                    sortOrder->oQuantity = min->oQuantity;
+                    sortOrder->oTotalPrice = min->oTotalPrice;
+
+
+                    min->oID = tempID;
+                    min->pID = temppID;
+                    min->oDate = tempoDate;
+                    min->oQuantity = tempoQuantity;
+                    min->oTotalPrice = tempoTotalPrice;
+
                     sortOrder = sortOrder->next;
 
                 } else if (orderType == 2){
@@ -206,9 +294,25 @@ struct oLinkedList{
                     }
 
                     // Swap Data
-                    int x = sortOrder->oQuantity;
+                    string tempID = sortOrder->oID;
+                    string temppID = sortOrder->pID;
+                    string tempoDate = sortOrder->oDate;
+                    int tempoQuantity = sortOrder->oQuantity;
+                    double tempoTotalPrice = sortOrder->oTotalPrice;
+
+                    sortOrder->oID = min->oID;
+                    sortOrder->pID = min->pID;
+                    sortOrder->oDate = min->oDate;
                     sortOrder->oQuantity = min->oQuantity;
-                    min->oQuantity = x;
+                    sortOrder->oTotalPrice = min->oTotalPrice;
+
+
+                    min->oID = tempID;
+                    min->pID = temppID;
+                    min->oDate = tempoDate;
+                    min->oQuantity = tempoQuantity;
+                    min->oTotalPrice = tempoTotalPrice;
+
                     sortOrder = sortOrder->next;
 
                 } else {
@@ -226,9 +330,25 @@ struct oLinkedList{
                     }
 
                     // Swap Data
-                    string x = sortOrder->oID;
+                    string tempID = sortOrder->oID;
+                    string temppID = sortOrder->pID;
+                    string tempoDate = sortOrder->oDate;
+                    int tempoQuantity = sortOrder->oQuantity;
+                    double tempoTotalPrice = sortOrder->oTotalPrice;
+
                     sortOrder->oID = min->oID;
-                    min->oID = x;
+                    sortOrder->pID = min->pID;
+                    sortOrder->oDate = min->oDate;
+                    sortOrder->oQuantity = min->oQuantity;
+                    sortOrder->oTotalPrice = min->oTotalPrice;
+
+
+                    min->oID = tempID;
+                    min->pID = temppID;
+                    min->oDate = tempoDate;
+                    min->oQuantity = tempoQuantity;
+                    min->oTotalPrice = tempoTotalPrice;
+
                     sortOrder = sortOrder->next;
 
                 } else if (orderType == 2){
@@ -240,9 +360,25 @@ struct oLinkedList{
                     }
 
                     // Swap Data
-                    int x = sortOrder->oQuantity;
+                    string tempID = sortOrder->oID;
+                    string temppID = sortOrder->pID;
+                    string tempoDate = sortOrder->oDate;
+                    int tempoQuantity = sortOrder->oQuantity;
+                    double tempoTotalPrice = sortOrder->oTotalPrice;
+
+                    sortOrder->oID = min->oID;
+                    sortOrder->pID = min->pID;
+                    sortOrder->oDate = min->oDate;
                     sortOrder->oQuantity = min->oQuantity;
-                    min->oQuantity = x;
+                    sortOrder->oTotalPrice = min->oTotalPrice;
+
+
+                    min->oID = tempID;
+                    min->pID = temppID;
+                    min->oDate = tempoDate;
+                    min->oQuantity = tempoQuantity;
+                    min->oTotalPrice = tempoTotalPrice;
+
                     sortOrder = sortOrder->next;
 
                 } else {
@@ -379,6 +515,16 @@ struct oLinkedList{
         getcwd(tmp, 256);
 
         string dir = strcat(tmp,"\\Generated_Reports\\report_");
+
+//        if(mkdir(dir1) == -1){
+//            mkdir(dir1);
+//            cout << "\n>Directory Not Found!. \n>Creating new directory. \n>Generating Report";
+//        } else {
+//            cout << "\nDirectory Found!, Generating Report";
+//        }
+
+
+
         dir = dir + to_string(day) + "_"
               + to_string(month) + "_"
               + to_string(year) + "_"
