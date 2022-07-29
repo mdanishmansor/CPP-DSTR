@@ -244,19 +244,19 @@ public:
 
         pLst.deleteAll();
         // Provide data for insert product function within PRODUCT struct
-        pLst.insertAtEnd("P003", "Supra QuadCopter", "Amazon", "Drone", "17/7/2022", 69, 200.0);
-        pLst.insertAtEnd("P001", "64GB Cruzer Pendrive", "Kingston", "Storage Device", "17/7/2022", 57, 32.0);
-        pLst.insertAtEnd("P005", "Ipad Mini", "Apple", "Tablet", "17/7/2022", 69, 2000.0);
-        pLst.insertAtEnd("P002", "IPhone 69", "Apple", "Phone", "17/7/2022", 20, 690.5);
-        pLst.insertAtEnd("P004", "Flamethrower", "Boring Company", "Cooking", "17/7/2022", 5, 420.5);
+        pLst.insertAtEnd("P003", "Supra QuadCopter", "Amazon", "Drone", "17/7/2022", 69, 200.00);
+        pLst.insertAtEnd("P001", "64GB Cruzer Pendrive", "Kingston", "Storage Device", "17/7/2022", 57, 32.00);
+        pLst.insertAtEnd("P005", "Ipad Mini", "Apple", "Tablet", "17/7/2022", 69, 2000.00);
+        pLst.insertAtEnd("P002", "IPhone 69", "Apple", "Phone", "17/7/2022", 20, 690.50);
+        pLst.insertAtEnd("P004", "Flamethrower", "Boring Company", "Cooking", "17/7/2022", 5, 420.50);
 
         oLst.deleteAll();
         // Provide data for insert order function within ORDER struct
-        oLst.insertAtEnd("R004", "P004", "17/7/2022", 5, 2102.5);
-        oLst.insertAtEnd("R005", "P001", "18/7/2022", 3, 96.0);
-        oLst.insertAtEnd("R001", "P002", "14/7/2022", 2, 1381.0);
-        oLst.insertAtEnd("R003", "P002", "15/7/2022", 3, 2071.5);
-        oLst.insertAtEnd("R002", "P005", "16/7/2022", 1, 2000.0);
+        oLst.insertAtEnd("R004", "P004", "17/7/2022", 5, 2102.50);
+        oLst.insertAtEnd("R005", "P001", "18/7/2022", 3, 96.55);
+        oLst.insertAtEnd("R001", "P002", "14/7/2022", 2, 1381.00);
+        oLst.insertAtEnd("R003", "P002", "15/7/2022", 3, 2071.59);
+        oLst.insertAtEnd("R002", "P005", "16/7/2022", 1, 2000.00);
 
         cin >> userOption;
         if (cin.fail()) { // To Validate user input that is supposed to be for int value type input

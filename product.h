@@ -302,7 +302,7 @@ struct pLinkedList{
     void show()
     {
         PRODUCT * curr = head;
-        cout << "________________________________________________________________________________________________________________" << endl
+        cout << "_____________________________________________________________________________________________________________________" << endl
             << "ID" << spacePrinter(30)
             << "NAME" << spacePrinter(4)
             << "SUPPLIER" << spacePrinter(30)
@@ -310,7 +310,7 @@ struct pLinkedList{
             << "REGISTER DATE" << "\t"
             << "STOCK" << spacePrinter(30)
             << "PRICE" << spacePrinter(30) << endl
-            << "_______________________________________________________________________________________________________________" << endl;
+            << "_____________________________________________________________________________________________________________________" << endl;
 
         while( curr != nullptr)
         {
@@ -321,8 +321,8 @@ struct pLinkedList{
                  << curr->pCategory<< spacePrinter(curr->pCategory.size() + 17)
                  << curr->pRegisterDate<< spacePrinter(curr->pRegisterDate.size() + 17)
                  << curr->pStock<< spacePrinter(27)
-                 << curr->pPrice<< endl;
-            ;
+                 << "RM" << setprecision(2) << fixed << curr->pPrice<< endl;
+
             curr = curr->next;
         }
     }

@@ -9,6 +9,9 @@
 #include <sys/stat.h>
 #include <direct.h>
 #include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <direct.h>
 
 // Usage of preprocessor directive for single compilation
 #pragma once
@@ -95,16 +98,15 @@ struct oLinkedList{
                 << "DATE" << spacePrinter(30)
                 << "QUANTITY" << spacePrinter(33)
                 << "TOTAL PRICE" << spacePrinter(30) << endl
-                << " _________________________________________________________________" << endl;
+                << " ________________________________________________________________" << endl;
 
         while( curr != nullptr)
         {
-            cout.precision(4);
             cout << curr->oID << spacePrinter(30) + "  "
                  << curr->pID<< "\t"
                  << curr->oDate<< spacePrinter(33)
                  << curr->oQuantity<< spacePrinter(26)
-                 << curr->oTotalPrice<< endl;
+                    << "RM" << setprecision(2) << fixed << curr->oTotalPrice << endl;
             curr = curr->next;
         }
     }
@@ -530,16 +532,14 @@ struct oLinkedList{
         char tmp[256];
         getcwd(tmp, 256);
 
-        string dir = strcat(tmp,"\\Generated_Reports\\report_");
-
-//        if(mkdir(dir1) == -1){
-//            mkdir(dir1);
-//            cout << "\n>Directory Not Found!. \n>Creating new directory. \n>Generating Report";
-//        } else {
-//            cout << "\nDirectory Found!, Generating Report";
-//        }
-
-
+        string dir = strcat(tmp,"\\Generated_Reports\\");
+        const char* createDir = dir.c_str();
+        //Creating Folder
+        if(mkdir(createDir) == -1){
+            cout << "\n>TARGET FOLDER FOUND! \n>GENERATING REPORT...\n";
+        } else {
+            cout << "\n>FOLDER NOT FOUND! \n>CREATING FOLDER \n>GENERATING REPORT...\n";
+        }
 
         dir = dir + to_string(day) + "_"
               + to_string(month) + "_"
