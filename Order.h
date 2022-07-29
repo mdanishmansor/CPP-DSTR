@@ -1,3 +1,4 @@
+// Including various C++ packages and libraries
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -8,16 +9,19 @@
 #include <sys/stat.h>
 #include <direct.h>
 #include <stdio.h>
+
+// Usage of preprocessor directive for single compilation
 #pragma once
 
+// Including external header files
 #include "product.h"
 #include "userLogin.h"
 
 using namespace std;
 
-// Data struct for PRODUCT
 struct stat info;
 
+// Data struct for ORDER
 struct ORDER{
     string oID, oDate, pID;
     int oQuantity;
@@ -25,6 +29,7 @@ struct ORDER{
     ORDER * next;
 };
 
+// struct for LinkedList
 struct oLinkedList{
     ORDER * head;
     int size;
@@ -36,11 +41,13 @@ struct oLinkedList{
         this->head = nullptr;
     }
 
+    // Function for returning the size of the current Linkedlist
     int getSize()
     {
         return size;
     }
 
+    // Function for deleting all data
     void deleteAll(){
         this->size = 0;
         this->head = nullptr;
@@ -53,6 +60,7 @@ struct oLinkedList{
         return (stat (s.c_str(), &buffer) == 0);
     }
 
+    // Function to insert hardcoded data at the end of the ORDER Linkedlist
     void insertAtEnd(string orderID,
                      string productID,
                      string orderDate,
@@ -77,6 +85,7 @@ struct oLinkedList{
         size++;
     }
 
+    // Function for displaying ORDER details in a table form
     void show()
     {
         ORDER * curr = head;
@@ -100,6 +109,7 @@ struct oLinkedList{
         }
     }
 
+    // Function to generate a new ID for new order creation
     string generateID(){
         int currentID = getSize() + 1;
         string generatedID;
@@ -117,6 +127,7 @@ struct oLinkedList{
         return generatedID;
     }
 
+    // Function to create new order at the end of the ORDER Linkedlist
     void createOrder(string pID, int quantity, double tPrice){
         ORDER * nextOrder = new ORDER;
         string orderID, orderDate;
@@ -129,7 +140,7 @@ struct oLinkedList{
         int day = ltm->tm_mday;
 
         orderID = generateID();
-        orderDate = to_string(year) + "/" + to_string(month) + "/" + to_string(day);
+        orderDate = to_string(day) + "/" + to_string(month) + "/" + to_string(year);
 
         nextOrder->oID = orderID;
         nextOrder->pID = pID;
@@ -152,6 +163,7 @@ struct oLinkedList{
         show();
     }
 
+    // Function for handling ORDER update process
     void update(string orderID, string userType)
     {
         string productID, orderDate, editedDate;
@@ -242,6 +254,7 @@ struct oLinkedList{
 
     }
 
+    // Function for handling sorting processes
     void selectionSort(int orderType, string arrangeType)
     {
         string selectedSort = "default";
@@ -390,6 +403,7 @@ struct oLinkedList{
         }
     }
 
+    // Function to search for Order ID within ORDER Linkedlist
     int searchID() {
         string searchKey;
         cin >> searchKey;
@@ -426,6 +440,7 @@ struct oLinkedList{
         return 0;
     }
 
+    // Function to create report based on ORDER data
     void createReport()
     {
         time_t now = time(0);
@@ -499,6 +514,7 @@ struct oLinkedList{
         printReport();
     }
 
+    // Function to print report based on generated report
     void printReport(){
 
         time_t now = time(0);
@@ -594,6 +610,6 @@ struct oLinkedList{
         cout << endl << "Report File Created and Saved Successfully at Directory: '" << dir << "'" << endl;
 
     }
-
-
 };
+
+

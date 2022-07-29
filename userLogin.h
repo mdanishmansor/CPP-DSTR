@@ -1,8 +1,8 @@
-//
-// Created by User on 16/7/2022.
-//
-#ifndef EDGE_H
-#define EDGE_H
+// Directives usages
+#ifndef LIVEORDERIT_MANAGEMENT_SYSTEM_DONUT_H
+#define LIVEORDERIT_MANAGEMENT_SYSTEM_DONUT_H
+
+// Including various C++ packages and libraries
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
@@ -11,27 +11,33 @@
 //#include "mainmenu.h"
 using namespace std;
 
+// Retrieve mainmenu class from external header file
 mainmenu mm;
 
+// Struct for users data
 struct USERS{
     string uID, uRole, uName, uGender, uEmail, uContactNumber, uAddress, uPassword;
     int uAge ;
     USERS *nextUSer;
 } ;
 
+// Set the size for mUsers array
 USERS mUsers[6];
+
+// Function for login process
 int Login () {
     string userID, userPassword;
     int loginAttempt = 0;
 
-    mUsers[0].uID = "1";
+    // User's data
+    mUsers[0].uID = "SOE0002";
     mUsers[0].uRole = "Sales Order Executive";
     mUsers[0].uName = "Muhammad Faris";
     mUsers[0].uGender = "Male";
     mUsers[0].uEmail = "faris01@gmail.com";
     mUsers[0].uContactNumber = "012-6763829";
     mUsers[0].uAddress = "Kuala Lumpur, Malaysia";
-    mUsers[0].uPassword = "1";
+    mUsers[0].uPassword = "012345";
     mUsers[0].uAge = 20;
 
     mUsers[1].uID = "SOE0002";
@@ -83,6 +89,8 @@ int Login () {
     mUsers[5].uAddress = "Kuala Lumpur, Malaysia";
     mUsers[5].uPassword = "bemeszaf";
     mUsers[5].uAge = 21;
+
+    // User ID and Password verification process
     while (loginAttempt < 6) {
         cout << "\t Please Login by Entering User ID and Password!\n";
         cout << "\t User ID: ";
@@ -115,9 +123,10 @@ int Login () {
     return 0;
     };
 
+// Function for handling logout process
 void logout(string userType){
     string exitOption = "";
-    cout<< "______________________________________________________________" << endl;
+    cout<< "\n______________________________________________________________" << endl;
     cout << "\n\t Are you sure you want to logout? ";
     cout << "\n\t [Y] Yes [N] No \n\t" << endl;
     cout << "\t ENTER YOUR CHOICE [Y/N]: ";
@@ -132,4 +141,4 @@ void logout(string userType){
     }
 }
 
-#endif
+#endif //LIVEORDERIT_MANAGEMENT_SYSTEM_DONUT_H

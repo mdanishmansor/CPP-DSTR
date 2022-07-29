@@ -1,18 +1,21 @@
+// Including various C++ packages and libraries
 #include <iostream>
 #include <conio.h>
 #include <limits>
 #include <stdlib.h>
+
+// Including external header files
 #include "userLogin.h"
+
 using namespace std;
 
-void loginMenu();
-
+// Function to start the program
 int start(){
 
-    int userOption;
-    string exitOption;
+    int userOption; // Variable to store user selection input
 
-    cout << "***********************************************************************************************************************" << endl;
+    // Display menu as text and options as text
+    cout << "\n***********************************************************************************************************************" << endl;
     cout << "***********************************************************************************************************************" << endl;
     cout << "***********************************************************************************************************************" << endl;
     cout << "*                                     Do you want to start the application?                                           *" << endl;
@@ -23,15 +26,17 @@ int start(){
     cout << "\t ENTER YOUR CHOICE [1/0]: ";
     cin >> userOption;
 
-    if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+    // To Validate user input that is supposed to be for int input
+    // Ex: Input only accepts numbers, string values wll reset the input to another to avoid error
+    if (cin.fail()) { //
         cin.clear();
         cin.ignore();
         userOption = 6969;
     }
-//    cin.clear();
-//    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
     cout << endl;
+
+    // To handle user choice and display the next option
     switch (userOption)
     {
         case 1:
@@ -47,7 +52,6 @@ int start(){
             }
             else if (exitOption == 'n' || exitOption == 'N')
             {
-//                system("cls");
                 start();
             }
             else
@@ -58,7 +62,7 @@ int start(){
 
             break;
         default:
-//            system("cls");
+            system("cls");
             cout << "\n\tPlease choose between 1/0 only!" << endl;
             start();
             break;
@@ -66,6 +70,6 @@ int start(){
 }
 int main()
 {
-    start();
+    start();     // Function to start the application
     return 0;
 }

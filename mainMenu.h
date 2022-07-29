@@ -1,30 +1,32 @@
-//
-// Created by User on 16/7/2022.
-//
+// Directives usages
+#ifndef LIVEORDERIT_MANAGEMENT_SYSTEM
+#define LIVEORDERIT_MANAGEMENT_SYSTEM
 
+// Including various C++ packages and libraries
 #include <iostream>
 #include <conio.h>
 #include <stdlib.h>
 
+// Including external header files
 #include "product.h"
-#include "order.h"
+#include "Order.h"
 
 using namespace std;
 
+// Functions Declaration
 void logout(string userType);
 int Login();
-void loginMenu();
-void displayMenu();
-void searchMenu(string userType);
 
-
+// Main Menu class
 class mainmenu{
 private:
 public:
 
+    // Retrieving ORDER and PRODUCT structures from header files
     pLinkedList pLst;
     oLinkedList oLst;
 
+    // Function to display navigation options to the user depending on their role
     string static userTypeNav(string userType){
         if (userType == "Admin") {
             return "\tORDER MANAGEMENT"
@@ -40,6 +42,7 @@ public:
         }
     }
 
+    // Function to display user roles on the main menu depending on their roles
     string static userTypeName(string userType){
         if (userType == "Admin") {
             return "*                                   LiveOrder IT Online Store Admin Menu                                              *";
@@ -48,6 +51,7 @@ public:
         }
     }
 
+    // Function to display user options below the main menu
     string static userNavChoice(string userType){
         if (userType == "Admin") {
             return "\t ENTER YOUR CHOICE [1/2/3/4/5/6/7/8/9/0]: ";
@@ -56,31 +60,37 @@ public:
         }
     }
 
+    // Function to contents of the main menu based on the user role
     void mainPageDisplay(string userType){
         char exitOption;
 
-        cout << "***********************************************************************************************************************" << endl;
+        cout << "\n***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << userTypeName(userType) << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << userTypeNav(userType)<< "[9] Search\n\t [0] Logout" << endl << endl;
+        cout << userTypeNav(userType)<< "[9] Search\n\t [0] Logout \n\t [???] Donut" << endl << endl;
         cout << userNavChoice(userType);
         mainNavigation(userType);
     }
 
     void mainNavigation(string userType){
         int userOption = 0;
+
+        // To Validate user input that is supposed to be for int input
+        // Ex: Input only accepts numbers, string values wll reset the input to another to avoid error
         cin >> userOption;
-        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+        if (cin.fail()) {
             cin.clear();
             cin.ignore();
             userOption = 6969;
         }
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        // If Else and Switch Case to redirect users to other pages based on their roles
         if (userType == "Admin") {
             switch (userOption)
             {
@@ -114,6 +124,9 @@ public:
                 case 9:
                     searchMenu(userType);
                     break;
+                case 133769420:
+                    doNut(userType);
+                    break;
                 default:
                     cout << "\n\tPlease choose between 1-9 only" << endl;
                     mainPageDisplay(userType);
@@ -142,6 +155,9 @@ public:
                 case 9:
                     searchMenu(userType);
                     break;
+                case 133769420:
+                    doNut(userType);
+                    break;
                 default:
                     cout << "\n\tPlease choose between 1/2/3/4/5/9/0 only" << endl;
                     mainPageDisplay(userType);
@@ -150,11 +166,13 @@ public:
 
     }
 
+    // Function to log in the user
     void loginMenu(){
         int userOption = 0;
         int menuOption = 0;
         string exitOption;
 
+        // Display Menu
         cout << endl;
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
@@ -166,6 +184,7 @@ public:
         cout << "\t [1] Login\n\t [0] EXIT" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1/0]: ";
         cin >> userOption;
+
         if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
             cin.clear();
             cin.ignore();
@@ -174,6 +193,7 @@ public:
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+        // Based on user input, will either execute the login function, exit the application or display error message.
         switch (userOption)
         {
             case 1:
@@ -207,6 +227,7 @@ public:
 
     }
 
+    // Function to obtain orders and products from supposedly "online database"
     void obtainOrders(string userType){
         int userOption = 0;
         char exitOption;
@@ -221,6 +242,8 @@ public:
         cout << "\t [1] EXIT" << endl << endl;
         cout << "\t ENTER YOUR CHOICE [1]: ";
 
+        pLst.deleteAll();
+        // Provide data for insert product function within PRODUCT struct
         pLst.insertAtEnd("P003", "Supra QuadCopter", "Amazon", "Drone", "17/7/2022", 69, 200.0);
         pLst.insertAtEnd("P001", "64GB Cruzer Pendrive", "Kingston", "Storage Device", "17/7/2022", 57, 32.0);
         pLst.insertAtEnd("P005", "Ipad Mini", "Apple", "Tablet", "17/7/2022", 69, 2000.0);
@@ -228,6 +251,7 @@ public:
         pLst.insertAtEnd("P004", "Flamethrower", "Boring Company", "Cooking", "17/7/2022", 5, 420.5);
 
         oLst.deleteAll();
+        // Provide data for insert order function within ORDER struct
         oLst.insertAtEnd("R004", "P004", "17/7/2022", 5, 2102.5);
         oLst.insertAtEnd("R005", "P001", "18/7/2022", 3, 96.0);
         oLst.insertAtEnd("R001", "P002", "14/7/2022", 2, 1381.0);
@@ -242,49 +266,55 @@ public:
         }
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        switch (userOption)
-        {
-            case 1:
-                mainPageDisplay(userType);
-                break;
-            default:
-                cout << "\n\tERROR WARNING! Dude, Just Pick 1! :^(" << endl;
-                obtainOrders(userType);
-                break;
-        }
 
+        // Returns user to main menu
+        if (userOption == 1){
+            mainPageDisplay(userType);
+        } else {
+            cout << "\n\tERROR WARNING! Dude, Just Pick 1! :^(" << endl;
+            obtainOrders(userType);
+        }
     }
 
+    // Function to create new orders based on current products
     void createOrderMenu(string userType){
-        int userOption = 0, selectQuantity;
+        int userOption = 0, selectQuantity; // Local variables to use for input data, checks if user wants to cancel insertion or continue
         string searchKey, selectPID, cont;
         bool PIDstatus = false, quantityStatus = false, exitStatus = false;
         int searchNKey;
         char exitOption;
+
+        // Display title
         cout << endl;
         cout << "***********************************************************************************************************************" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                   LiveOrder IT Online Store Create New Order                                        *" << endl;
         cout << "*                                                                                                                     *" << endl;
-        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                       1                                              *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
 
-        while (PIDstatus == false){
+        // Checks if user wants to cancel, if not, insert a product ID
+        while (!PIDstatus){
+            cout << "\t INSERT `0` TO CANCEL or";
             cout << "\t ENTER PRODUCT ID: ";
             cin >> selectPID;
             PIDstatus = pLst.getProdID(selectPID);
             if(selectPID == "0"){
                 quantityStatus = true;
                 PIDstatus = true;
+                exitStatus = true;
             } else if (PIDstatus == false){
                 cout << "\n\t PRODUCT ID NOT FOUND! PLEASE TRY AGAIN!";
             } else{
-
+                // Exit status becomes true if only 0 is inputted
             }
 
         }
+
+        // Checks if user wants to cancel, if not, insert a product quantity for order
         while (quantityStatus == false){
+            cout << "\t INSERT `0` TO CANCEL or";
             cout << "\t ENTER PRODUCT QUANTITY: ";
             cin >> selectQuantity;
             PIDstatus = pLst.getProdQuantity(selectPID, selectQuantity);
@@ -299,16 +329,20 @@ public:
             }
         }
 
-        if (exitStatus == false) {
+        // Checks if user cancelled, the order creation function won't be executed
+        if (!exitStatus) {
             oLst.createOrder(selectPID, selectQuantity, pLst.calcTotal(selectPID, selectQuantity));
             cout << "\n\t ORDER SUCCESSFULLY CREATED. ENTER ANY VALUE TO CONTINUE." << endl;
             cin >> cont;
+        } else {
+            cout << "\nORDER CREATION PROCESS CANCELLED" << endl;
         }
 
 
         mainPageDisplay(userType);
     }
 
+    // Function for new product insertion
     void insertProductMenu(string userType){
         int userOption = 0, selectQuantity, cont;
         string searchKey, selectPID;
@@ -324,6 +358,7 @@ public:
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
 
+        // Starts new product insertion process
         pLst.insertProduct();
 
         cout << "\n New Product Inserted! Do you want insert another product? \n\t [1] Yes \n\t [ANY] No \n\n\t ENTER CHOICE[1/ANY] : \n";
@@ -341,6 +376,7 @@ public:
 
     }
 
+    // Function for displaying the title for order list
     void displayOrder(string userType){
         cout << endl;
         cout << "***********************************************************************************************************************" << endl;
@@ -354,6 +390,7 @@ public:
 
     }
 
+    // Function for displaying the contents of the order list
     void afterdisplay(string userType){
         int userOption, userOption2 = 0;
 
@@ -404,6 +441,7 @@ public:
             }
     }
 
+    // Function for displaying the title of product list
     void displayProduct(string userType){
         cout << endl;
         cout << "***********************************************************************************************************************" << endl;
@@ -417,6 +455,7 @@ public:
 
     }
 
+// Function for displaying the contents of the product list
     void afterDisplayProduct(string userType){
         int userOption, userOption2 = 0;
 
@@ -445,6 +484,7 @@ public:
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << endl;
 
+        // Sorting options
         switch (userOption2)
         {
             case 1:
@@ -467,6 +507,7 @@ public:
         }
     }
 
+// Function for updating available orders
     void updateOrder(string userType){
         string userOption;
 
@@ -495,12 +536,10 @@ public:
         } else {
             oLst.update(userOption, userType);
             updateOrder(userType);
-
         }
-
-
     }
 
+    // Function for updating available products
     void updateProduct(string userType){
         string userOption;
 
@@ -535,6 +574,7 @@ public:
 
     }
 
+    // Function for displaying search menu
     void searchMenu(string userType){
         int userOption = 0;
         string searchKey;
@@ -560,6 +600,7 @@ public:
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+        // Requests user for search value
         switch (userOption)
         {
             case 1:
@@ -595,6 +636,7 @@ public:
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+        // Redirects user based on their choices
         switch (userOption)
         {
             case 1:
@@ -611,6 +653,7 @@ public:
 
     }
 
+    // Function for handling report generation
     void generateReport(string userType){
         int userOption, userOption2 = 0;
         cout << endl;
@@ -648,6 +691,7 @@ public:
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << endl;
 
+        // Choose sorting type
         switch (userOption2)
         {
             case 1:
@@ -673,6 +717,65 @@ public:
                 break;
         }
     }
+// MMmmmmmmm donut......insert navigation donut code 133769420 for donut access
+    void doNut(string userType){
+        int userOption = 0;
+        char exitOption;
+        cout << endl;
+        cout << "***********************************************************************************************************************" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                              ENJOY YOUR DONUT! RM69.99 HAS BEEN DEDUCTED FROM YOUR SALARY.                          *" << endl;
+        cout << "*                                                  Have a nice day!    :^)                                            *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "*                                                                                                                     *" << endl;
+        cout << "***********************************************************************************************************************" << endl << endl;
+        cout << "                                 $$$$$$$$$$$$@@@$\n"
+                "                              $#####******#####$$$$$\n"
+                "                           ###***!!!!!!!!*!!***####$$$#\n"
+                "                          ***!!!!!===;;;===!!!!****#####\n"
+                "                        ***!!!===;::~~~~~::;;==!!!**#####*\n"
+                "                       !*!!!==;;~~-,,...,,-~::;==!!*****#**\n"
+                "                       !!!!==;:~-,.........,-~:;;=!!!******=\n"
+                "                      =!!!==;;:-,............,~:;==!!******!\n"
+                "                      =!!!!==;:-,...       ..,-:;;=!!!!!**!!\n"
+                "                      =!!!!!=;;:-..         .,-~:;==!!!!!!!!;\n"
+                "                      =!!!!!!!!!=;~         ,-~:;===!!!!!!!=:\n"
+                "                      ;=!****####**=       :;;;==!!!!!!!!!==\n"
+                "                      ~=!!***##$$$$$$#*!*!*!!!!!!!!!!!!!!==:\n"
+                "                       ;=!!**#$$$@@@@@$$$##*****!!!!!!!==;;-\n"
+                "                        :=!!**##$$$$@$$$$###****!!!!!===;:~\n"
+                "                         ~;=!!**###$$$#####***!!!!!===;;~-\n"
+                "                          -:==!!!!*********!!!!!!==;;::-\n"
+                "                            ,~:;=!!!!!!*!!!!!===;;::~,\n"
+                "                               ,~~:;;;====;;;;::~--.\n"
+                "                                   ..,,-----,,.." << endl;
+        cout << "\n\t\t\t [1] EAT DONUT AND EXIT" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1]: ";
+
+        cin >> userOption;
+        if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
+            cin.clear();
+            cin.ignore();
+            userOption = 6969;
+        }
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        switch (userOption)
+        {
+            case 1:
+                mainPageDisplay(userType);
+                break;
+            default:
+                cout << "\n\tERROR WARNING! Dude, Just Pick 1! :^(" << endl;
+                doNut(userType);
+                break;
+        }
+
+    }
 };
+
+#endif //LIVEORDERIT_MANAGEMENT_SYSTEM_DONUT_H
+
 
 

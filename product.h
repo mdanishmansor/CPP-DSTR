@@ -1,12 +1,14 @@
+// Including various C++ packages and libraries
 #include <iostream>
 #include <iomanip>
 #include <string>
 
+// Usage of preprocessor directive for single compilation
 #pragma once
+
 using namespace std;
 
-// Data struct for PRODUCT
-
+// Function for data display
 string spacePrinter(int length)
 {
     string spaces =" ";
@@ -17,6 +19,7 @@ string spacePrinter(int length)
     return spaces;
 }
 
+// Data struct for PRODUCT
 struct PRODUCT {
     string pID, pName, pSupplier, pCategory, pRegisterDate;
     int pStock;
@@ -24,6 +27,7 @@ struct PRODUCT {
     PRODUCT* next;
 };
 
+// Struct for PRODUCT Linkedlist
 struct pLinkedList{
     PRODUCT * head;
     int size;
@@ -33,11 +37,20 @@ struct pLinkedList{
         this->head = nullptr;
     }
 
+    // Function for returning the size of the current Linkedlist
     int getSize()
     {
         return size;
     }
 
+    // Function for deleting all data
+    void deleteAll(){
+        this->size = 0;
+        this->head = nullptr;
+
+    }
+
+    // Function to identify if the Product ID exists
     bool getProdID(string prodID){
         PRODUCT * curr = head;
         while( curr != nullptr)
@@ -53,6 +66,7 @@ struct pLinkedList{
         return false;
     }
 
+    // Function to identify if the Product Quantity is enough to create a new order
     bool getProdQuantity(string prodID, int prodQuantity){
         int currentQuantity;
         PRODUCT * curr = head;
@@ -60,7 +74,6 @@ struct pLinkedList{
         {
             if(prodID == curr->pID) {
                 currentQuantity =  curr->pStock - prodQuantity;
-                cout << "Current QUantity: " << currentQuantity << endl;
                 if (currentQuantity >= 0){
                     curr->pStock = currentQuantity;
                     return true;
@@ -75,6 +88,7 @@ struct pLinkedList{
         return false;
     }
 
+    // Function to insert hardcoded data at the end of the PRODUCT Linkedlist
     void insertAtEnd(string productID,
                      string productName,
                      string productSupplier,
@@ -103,6 +117,7 @@ struct pLinkedList{
         size++;
     }
 
+    // Function to generate a new ID for new product insertion
     string generateID(){
         int currentID = getSize() + 1;
         string generatedID;
@@ -120,6 +135,7 @@ struct pLinkedList{
         return generatedID;
     }
 
+    // Function to insert new data at the end of the PRODUCT Linkedlist
     void insertProduct(){
         PRODUCT * nextProduct = new PRODUCT;
         string productID, productName, productSupplier, productCategory, productRegisterDate;
@@ -191,6 +207,7 @@ struct pLinkedList{
 
     }
 
+    // Function to search for Product ID within PRODUCT Linkedlist
     int searchPID() {
         string searchKey;
         cin >> searchKey;
@@ -221,10 +238,7 @@ struct pLinkedList{
 
                 return 1;
             }
-
             searchNode=searchNode->next;
-//            key[0];
-
         }
         cout<< "______________________________________________________________" << endl
             << "\n\t PRODUCT ID NOT FOUND!" << endl
@@ -232,6 +246,7 @@ struct pLinkedList{
         return 0;
     }
 
+    // Function to search for Product Quantity within PRODUCT Linkedlist
     int searchPStock() {
         int searchKey;
         cin >> searchKey;
@@ -259,35 +274,31 @@ struct pLinkedList{
                      << "______________________________________________________________________________________________________________" << endl;
 
             }
-
             searchNode=searchNode->next;
-//            key[0];
-
         }
         cout << "\n\t SEARCH COMPLETED!" << endl;
         return 0;
     }
 
+    // Function to calculate for total price for based on product quantity for a new ORDER creation
     int calcTotal(string prodID, int quantity){
         double totalPrice;
-//        show();
         PRODUCT * curr = head;
         while( curr != nullptr)
         {
             if(prodID == curr->pID) {
                 totalPrice = curr->pPrice * quantity;
-                cout << "found!" << endl;
                 curr = nullptr;
                 return totalPrice;
 
             } else {
                 curr = curr->next;
             }
-
         }
         return 0;
     }
 
+    // Function for displaying PRODUCT details in a table form
     void show()
     {
         PRODUCT * curr = head;
@@ -316,6 +327,7 @@ struct pLinkedList{
         }
     }
 
+    // Function for handling sorting processes
     void selectionSort(int productType, string arrangeType)
     {
         string selectedSort = "default";
@@ -484,6 +496,7 @@ struct pLinkedList{
         }
     }
 
+    // Function for handling PRODUCT update process
     void update(string prodID, string userType)
     {
         string productID, productName, productSupplier, productCategory, productRegisterDate, eProdName, eProdSupplier, eProdCategory;
@@ -618,3 +631,4 @@ struct pLinkedList{
 
     }
 };
+
