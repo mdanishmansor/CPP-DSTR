@@ -30,14 +30,14 @@ int Login () {
     int loginAttempt = 0;
 
     // User's data
-    mUsers[0].uID = "SOE0002";
+    mUsers[0].uID = "SOE0001";
     mUsers[0].uRole = "Sales Order Executive";
     mUsers[0].uName = "Muhammad Faris";
     mUsers[0].uGender = "Male";
     mUsers[0].uEmail = "faris01@gmail.com";
     mUsers[0].uContactNumber = "012-6763829";
     mUsers[0].uAddress = "Kuala Lumpur, Malaysia";
-    mUsers[0].uPassword = "012345";
+    mUsers[0].uPassword = "faris222";
     mUsers[0].uAge = 20;
 
     mUsers[1].uID = "SOE0002";
@@ -92,15 +92,15 @@ int Login () {
 
     // User ID and Password verification process
     while (loginAttempt < 6) {
-        cout << "\t Please Login by Entering User ID and Password!\n";
+        cout << "\t  Please Login by Entering User ID and Password!\n";
         cout << "\t User ID: ";
         cin >> userID;
-        cout << "\t Password : ";
+        cout << "\t  Password : ";
         cin >> userPassword;
         for (int i = 0; i <= 6; i++) {
             if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword &&
                 mUsers[i].uRole == "Sales Order Executive") {
-                cout << "\n\t\t\t\tLog In Successful!\n";
+                cout << "\n\t\t\t\t          Log In Successful!\n";
                 cout << "\n\t\t\t\tWELCOME Sales Order Executive" << " " << mUsers[i].uName << "\n\t" << endl;
                 mm.mainPageDisplay("Sales Order Executive");
                 return 0;
@@ -112,7 +112,7 @@ int Login () {
                 return 0;
             }
         }
-        cout << "\nInvalid login attempt, Incorrect Password or ID. Please try again.\n" << endl;
+        cout << "\n\t Invalid login attempt, Incorrect Password or ID. Please try again.\n" << endl;
         loginAttempt++;
         if (loginAttempt == 6) {
             cout << "\nToo many login attempts! The program will now terminate.";

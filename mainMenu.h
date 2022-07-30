@@ -244,10 +244,10 @@ public:
 
         pLst.deleteAll();
         // Provide data for insert product function within PRODUCT struct
-        pLst.insertAtEnd("P003", "Supra QuadCopter", "Amazon", "Drone", "17/7/2022", 69, 200.00);
-        pLst.insertAtEnd("P001", "64GB Cruzer Pendrive", "Kingston", "Storage Device", "17/7/2022", 57, 32.00);
-        pLst.insertAtEnd("P005", "Ipad Mini", "Apple", "Tablet", "17/7/2022", 69, 2000.00);
-        pLst.insertAtEnd("P002", "IPhone 69", "Apple", "Phone", "17/7/2022", 20, 690.50);
+        pLst.insertAtEnd("P003", "Supra_QuadCopter", "Amazon", "Drone", "17/7/2022", 69, 200.00);
+        pLst.insertAtEnd("P001", "64GB_Cruzer_Pendrive", "Kingston", "Storage Device", "17/7/2022", 57, 32.00);
+        pLst.insertAtEnd("P005", "Ipad_Mini", "Apple", "Tablet", "17/7/2022", 69, 2000.00);
+        pLst.insertAtEnd("P002", "IPhone_69", "Apple", "Phone", "17/7/2022", 20, 690.50);
         pLst.insertAtEnd("P004", "Flamethrower", "Boring Company", "Cooking", "17/7/2022", 5, 420.50);
 
         oLst.deleteAll();
