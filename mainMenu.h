@@ -537,6 +537,7 @@ public:
             oLst.update(userOption, userType);
             updateOrder(userType);
         }
+
     }
 
     // Function for updating available products
@@ -588,8 +589,8 @@ public:
         cout << "*                                                                                                                     *" << endl;
         cout << "*                                                                                                                     *" << endl;
         cout << "***********************************************************************************************************************" << endl << endl;
-        cout << "\t [1] Order ID \n\t [2] Product ID \n\t [3] Product Stock \n\t [4] EXIT" << endl << endl;
-        cout << "\t ENTER YOUR CHOICE [1/2/3/4]: ";
+        cout << "\t [1] Order ID \n\t [2] Product Quantity \n\t [3] Product ID \n\t [4] Product Stock \n\t [5] EXIT" << endl << endl;
+        cout << "\t ENTER YOUR CHOICE [1/2/3/4/5]: ";
 
         cin >> userOption;
         if (cin.fail()) { // To Validate user input that is supposed to be for int value type input
@@ -608,14 +609,18 @@ public:
                 oLst.searchID();
                 break;
             case 2:
+                cout << "\n\t ENTER PRODUCT QUANTITY TO SEARCH:  ";
+                oLst.searchOQuantity();
+                break;
+            case 3:
                 cout << "\n\t ENTER PRODUCT ID TO SEARCH:  ";
                 pLst.searchPID();
                 break;
-            case 3:
+            case 4:
                 cout << "\n\t ENTER PRODUCT STOCK TO SEARCH:  ";
                 pLst.searchPStock();
                 break;
-            case 4:
+            case 5:
                 mainPageDisplay(userType);
                 break;
             default:

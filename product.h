@@ -233,7 +233,7 @@ struct pLinkedList{
                      << searchNode->pCategory<< spacePrinter(searchNode->pCategory.size() + 17)
                      << searchNode->pRegisterDate<< spacePrinter(searchNode->pRegisterDate.size() + 17)
                      << searchNode->pStock<< spacePrinter(27)
-                     << searchNode->pPrice<< endl
+                     << "RM" << searchNode->pPrice<< endl
                      << "______________________________________________________________________________________________________________" << endl;
 
                 return 1;
@@ -627,7 +627,9 @@ struct pLinkedList{
                 editProduct = editProduct->next;
             }
         }
-        cout << "\n\t PRODUCT ID NOT FOUND!" << endl;
+        cout<< "\n\t\t\t______________________________________________________________" << endl
+            << "\n\t\t\t\t\t        PRODUCT ID NOT FOUND!" << endl
+            << "\n\t\t\t______________________________________________________________" << endl;
 
     }
 };

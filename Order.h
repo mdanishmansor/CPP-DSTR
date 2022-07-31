@@ -189,12 +189,13 @@ struct oLinkedList{
                      << editOrder->pID<< "\t"
                      << editOrder->oDate<< spacePrinter(33)
                      << editOrder->oQuantity<< spacePrinter(26)
-                     << editOrder->oTotalPrice<< endl << endl << endl
+                     << "RM" << editOrder->oTotalPrice<< endl << endl << endl
                      << "\t DO YOU WANT TO EDIT THIS ORDER?" << endl
                      << "\t [1] Yes \n\t [2] No" << endl << endl
                      << "\t ENTER YOUR CHOICE [1/2]: ";
                      cin >> choice1;
                 cout << "_______________________________________________" << endl;
+
 
                 switch (choice1)
                 {
@@ -250,8 +251,13 @@ struct oLinkedList{
 
             } else {
                 editOrder = editOrder->next;
+
             }
+
         }
+        cout<< "\n\t\t\t______________________________________________________________" << endl
+            << "\n\t\t\t\t\t         ORDER ID NOT FOUND!" << endl
+            << "\n\t\t\t______________________________________________________________" << endl;
 
 
     }
@@ -426,8 +432,44 @@ struct oLinkedList{
                          << searchNode->pID<< "\t"
                          << searchNode->oDate<< spacePrinter(33)
                          << searchNode->oQuantity<< spacePrinter(26)
-                         << searchNode->oTotalPrice<< endl
+                         << "RM"<<searchNode->oTotalPrice<< endl
                          << "_________________________________________________________________" << endl;
+
+                return 1;
+            }
+
+            searchNode=searchNode->next;
+//            key[0];
+
+        }
+        cout<< "______________________________________________________________" << endl
+            << "\n\t RESULT NOT FOUND!" << endl
+            << "_________________________________________________________________" << endl;
+        return 0;
+    }
+    //Function to Search Order By Quantity
+    int searchOQuantity (){
+        int searchKey;
+        cin >> searchKey;
+        ORDER *searchNode = head;
+        while(searchNode!=NULL){
+            if(searchNode->oQuantity==searchKey){
+                cout<< "\n\t RESULT FOUND!" << endl
+                    << "_________________________________________________________________" << endl
+                    << "ORDER ID" << spacePrinter(33)
+                    << "PRODUCT ID" << spacePrinter(32)
+                    << "DATE" << spacePrinter(30)
+                    << "QUANTITY" << spacePrinter(33)
+                    << "TOTAL PRICE" << spacePrinter(30) << endl
+                    << "_________________________________________________________________" << endl;
+
+                cout.precision(4);
+                cout << searchNode->oID << spacePrinter(30) + "  "
+                     << searchNode->pID<< "\t"
+                     << searchNode->oDate<< spacePrinter(33)
+                     << searchNode->oQuantity<< spacePrinter(26)
+                     << "RM"<< searchNode->oTotalPrice<< endl
+                     << "_________________________________________________________________" << endl;
 
                 return 1;
             }
@@ -587,7 +629,7 @@ struct oLinkedList{
                      << curr2->pID<< "\t"
                      << curr2->oDate<< spacePrinter(-25)
                      << curr2->oQuantity<< spacePrinter(26)
-                     << curr2->oTotalPrice<< endl;
+                     << "RM" << curr2->oTotalPrice<< endl;
                 curr2 = curr2->next;
             }
             fw.precision(4);
