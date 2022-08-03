@@ -92,10 +92,10 @@ int Login () {
 
     // User ID and Password verification process
     while (loginAttempt < 6) {
-        cout << "\t  Please Login by Entering User ID and Password!\n";
+        cout << "\t Please Login by Entering User ID and Password!\n";
         cout << "\t User ID: ";
         cin >> userID;
-        cout << "\t  Password : ";
+        cout << "\t Password : ";
         cin >> userPassword;
         for (int i = 0; i <= 6; i++) {
             if (userID == mUsers[i].uID && userPassword == mUsers[i].uPassword &&

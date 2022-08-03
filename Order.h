@@ -189,7 +189,7 @@ struct oLinkedList{
                      << editOrder->pID<< "\t"
                      << editOrder->oDate<< spacePrinter(33)
                      << editOrder->oQuantity<< spacePrinter(26)
-                     << "RM" << editOrder->oTotalPrice<< endl << endl << endl
+                     << "RM" << setprecision(2) << fixed << editOrder->oTotalPrice<< endl << endl << endl
                      << "\t DO YOU WANT TO EDIT THIS ORDER?" << endl
                      << "\t [1] Yes \n\t [2] No" << endl << endl
                      << "\t ENTER YOUR CHOICE [1/2]: ";
